@@ -39,8 +39,8 @@ typedef struct hist_t
 typedef struct b_t
 {
         char *cmd;
-        void(*func)(char *);
-}
+        void(*func)(char **);
+}b_t;
 
 
 /**
@@ -66,9 +66,8 @@ int _putchar(char c);
 void print_env(char **environ);
 void exit_shell(char **cmd);
 int is_builtin(char **cmd);
-int wordcount(char *s);
+int wordcount(char *s, char *d);
 char *eachword(char *s);
-char **strtow(char *str);
 char **_strtok(char *str, char *d);
 int _strcmp(char *s1, char *s2);
 
