@@ -11,18 +11,19 @@
 
 int wordcount(char *s, char *d)
 {
-        int i, wc = 0, l = 0;
+        int i, wc = 0, l = 0, j;
 
         for (i = 0; s[i] != '\0'; ++i)
-        {
-                if (s[i] != d && l == 0)
-                {
-                        l = 1;
-                        wc++;
-                }
+		for (j = 0; d[j] != '\0'; ++j)
+		{
+			if (s[i] != d[j] && l == 0)
+			{
+				l = 1;
+				wc++;
+			}
 
-                else if (s[i] == d && l != 0)
-                        l = 0;
+			else if (s[i] == d[j] && l != 0)
+				l = 0;
 
         }
         return (wc);
@@ -34,21 +35,21 @@ int wordcount(char *s, char *d)
  */
 
 
-char *eachword(char *s, char *d)
+char *eachword(char *s)
 {
         char *w;
         int i;
 
 
-        for (i = 0; s[i] != '\0' && s[i] != d; ++i)
-                ;
+        for (i = 0; s[i] != '\0'; ++i)
+			;
 
         w = (char *)malloc(sizeof(char) * (i + 1));
 
         if (w)
         {
-                for (i = 0; s[i] != '\0' && s[i] != d; ++i)
-                        w[i] = s[i];
+                for (i = 0; s[i] != '\0'; ++i)
+				w[i] = s[i];
                 w[i] = '\0';
         }
 
@@ -61,15 +62,15 @@ char *eachword(char *s, char *d)
  * Return: Null if failed. Otherwise return pointer to pointer.
  */
 
-char **strtok(char *str, char *d)
+char **_strtok(char *str, char *d)
 {
         char **arr;
-        int i, l = 0, wc;
+        int i, l = 0, wc, j;
 
         if (str == NULL)
                 return (NULL);
 
-        wc = wordcount(str);
+        wc = wordcount(str, d);
         if (wc == 0)
                 return (NULL);
 
@@ -86,26 +87,24 @@ char **strtok(char *str, char *d)
 
 
         for (i = 0; str[i] != '\0'; i++)
-                if (str[i] != d && l == 0)
-                {
-                        *(arr + wc) = eachword((str + i));
+		for (j = 0; d[j] != '\0'; j++)
+			if (str[i] != d[j] && l == 0)
+			{
+				*(arr + wc) = eachword((str + i));
 
-                        if (arr[wc] == 0)
-                        {
-                                for (i = 0; i <= wc; ++i)
-                                        free(arr[wc]);
-                                free(arr);
-                                return (NULL);
-                        }
-                        wc++;
-                        l = 1;
+				if (arr[wc] == 0)
+				{
+					for (i = 0; i <= wc; ++i)
+						free(arr[wc]);
+					free(arr);
+					return (NULL);
+				}
+				wc++;
+				l = 1;
 
-                }
+			}
 
-                else if (str[i] == d && l != 0)
-                        l = 0;
-}
-
+			else if (str[i] == d[j] && l != 0)
+				l = 0;
 return (arr);
-
 }
