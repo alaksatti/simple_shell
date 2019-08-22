@@ -13,11 +13,14 @@ int main(void)
 	char *command_path = NULL;
 
 
+
+	init_env(&env);
+
 	interactive = is_interactive();
+
+
 	while (env.in_shell && chars_read != -1)
 	{
-		init_env(&env);
-
 		if (interactive)
 		{
 			chars_write = write(STDOUT_FILENO, "$ ", 2);
