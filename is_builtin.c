@@ -1,7 +1,7 @@
 #include "holberton.h"
 
 
-int is_builtin(char **cmd)
+int is_builtin(char **cmd, env_t *env)
 {
 	int i = 0;
 
@@ -9,6 +9,7 @@ int is_builtin(char **cmd)
 
 		{"env", print_env},
 		{"exit", exit_shell},
+		{"echo", echo_parser},
 /**
 		{"help", help},
 		{"history", history},
@@ -21,12 +22,11 @@ int is_builtin(char **cmd)
 		{NULL, NULL},
 	};
 
-
 while (built_in_list[i].cmd)
 {
 	if(!_strcmp(built_in_list[i].cmd, cmd[0]))
 	{
-		built_in_list[i].func(cmd);
+		built_in_list[i].func(cmd, env);
 		return (0);
 	}
 
