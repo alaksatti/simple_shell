@@ -14,6 +14,29 @@
 
 extern char **environ;
 
+
+/**
+ * struct est_env - singly linked list.
+ * @env: env var to be evaluated.
+ * @value: value of env var.
+ * @next:next node in the list.
+ *
+ * Description: singly linked list that establishes env var.
+ */
+
+typedef struct est_env
+{
+	char  *envar;
+	char *value;
+	struct est_env *next;
+
+
+}est_env;
+
+
+
+
+
 /**
  * struct env_t - structure of specific shell environment variables.
  * @exit_sig - holds the exit signal.
@@ -24,8 +47,7 @@ typedef struct env_t
 	int in_shell;
 	int status;
 	int exit_sig;
-
-
+	struct est_env *env_var;
 }env_t;
 
 /**
@@ -54,7 +76,7 @@ typedef struct hist_t
 typedef struct b_t
 {
         char *cmd;
-        void(*func)(char **, env_t *);
+        int(*func)(char **, env_t *);
 }b_t;
 
 
@@ -78,9 +100,9 @@ char **tokenize(char *line);
 char *_getenv(const char *name);
 char *search_path(char *command);
 int _putchar(char c);
-void print_env(char **environ, env_t *env);
-void exit_check(char **cmd, env_t *env);
-void exit_shell(char **cmd, env_t *env);
+int print_env(char **environ, env_t *env);
+int exit_check(char **cmd, env_t *env);
+int exit_shell(char **cmd, env_t *env);
 int is_builtin(char **cmd, env_t *env);
 int wordcount(char *s, char *d);
 char *eachword(char *s);
@@ -90,7 +112,11 @@ env_t *init_env(env_t *env);
 void exit_status(char **cmd, env_t *env);
 char *reverse(char *s, env_t *env);
 char *itoa(int num, char *s, env_t *env);
-void echo_parser(char **cmd, env_t *env);
+int echo_parser(char **cmd, env_t *env);
 void echo_ppid(char **cmd, env_t *env);
 void echo_exit_status(char **cmd, env_t *env);
+void addnode(est_env **head, char *var, char *value);
+int set_env(char **cmd, env_t *env);
+void print_list(est_env *h);
+void reverse_list(est_env **head);
 #endif
