@@ -11,13 +11,12 @@ int is_builtin(char **cmd, env_t *env)
 		{"exit", exit_shell},
 		{"echo", echo_parser},
 		{"setenv", set_env},
+		{"unsetenv", unset_env}, 
 /**
 		{"help", help},
 		{"history", history},
 		{"cd", change_dir},
 		{"alias", alias},
-		{"setenv", set_env},
-		{"unsetenv", unset_env},
 **/
 		{"", NULL},
 		{NULL, NULL},

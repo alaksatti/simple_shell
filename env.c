@@ -8,7 +8,7 @@
  */
 
 
-int set_env(char **cmd, env_t *env)
+void set_env(char **cmd, env_t *env)
 {
 
 	est_env *nodescanner = env->env_var;
@@ -19,7 +19,7 @@ int set_env(char **cmd, env_t *env)
 	value = cmd[2];
 
 
-	if (env && value)
+	if (env && value && !cmd[3])
 	{
 		if (!nodescanner)
 		{
@@ -32,7 +32,10 @@ int set_env(char **cmd, env_t *env)
 			node = (nodescanner->envar);
 
 			if (!_strcmp(var, node))
+			{
 				(nodescanner->value) = value;
+				return;
+			}
 
 			nodescanner = (nodescanner->next);
 		}
@@ -49,7 +52,6 @@ int set_env(char **cmd, env_t *env)
 /**
 	reverse_list(&(env->env_var));
 **/
-	return (0);
 }
 
 /**
@@ -176,4 +178,101 @@ void reverse_list(est_env **head)
         }
 
         *head = prevnode;
+}
+
+
+
+unsigned int sortlist(est_env *list, char *cmd)
+{
+	unsigned int index = 0;
+
+	est_env *currentnode = list, *next;
+
+        while (list && _strcmp(cmd, currentnode->envar))
+        {
+		currentnode = list;
+		list = list->next;
+		index++;
+
+	}
+
+	if (!list)
+	{
+		write(STDERR_FILENO, "VARIABLE NOT PREV SET\n", 23);
+		return;
+	}
+
+	return (index);
+}
+
+
+/**
+ * unset_env - deletes an env variable.
+ * @cmd: command.
+ * @env: struc of variables.
+ * Return: Nothing.
+ */
+void unset_env(char **cmd, env_t *env)
+{
+
+        est_env *nodescanner = env->env_var, *prevnode = env->env_var;
+	est_env *targetnode;
+        unsigned int idx = 0, index;
+
+
+	if (!nodescanner)
+	{
+		write(STDERR_FILENO, "VARIABLE NOT PREV SET\n", 23);
+		env->status = -1;
+		return;
+	}
+
+
+	if (!cmd[1] && cmd[2])
+	{
+		write(STDERR_FILENO, "ARGUMENT ERROR\n", 15);
+		env->status = -1;
+		return;
+	}
+
+
+	index = sortlist(env->env_var, cmd[1]);
+
+	printf("%i\n\n\n\n\n", index);
+        if (index == 0)
+        {
+
+                env->env_var = env->env_var->next;
+		free(nodescanner->envar);
+		free(nodescanner->value);
+                free(nodescanner);
+                env->status = -1;
+        }
+        while (nodescanner && idx != index)
+        {
+                idx++;
+                prevnode = nodescanner;
+                nodescanner = nodescanner->next;
+
+
+        }
+        if (idx == index)
+        {
+		printf("/n/nright here");
+
+		printf("%s\n\n %s", nodescanner->envar,  prevnode->next->envar );
+                targetnode = nodescanner;
+
+                prevnode->next = targetnode->next;
+
+		free(targetnode->envar);
+		free(targetnode->value);
+                free(targetnode);
+
+                env->status = 0;
+        }
+
+	else
+		env->status = -1;
+
 }

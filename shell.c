@@ -61,7 +61,7 @@ int main(void)
 
 		}
 		else
-			env.status = wait(&status);
+			wait(&status);
 	}
 	return (0);
 }

@@ -7,11 +7,11 @@
  * Return: nothing.
  */
 
-int exit_check(char **cmd, env_t *env)
+void exit_check(char **cmd, env_t *env)
 {
 
         if ((_strcmp(cmd[0], "exit") == 0))
-		return (exit_shell(cmd, env));
+		exit_shell(cmd, env);
 }
 
 /**
@@ -21,7 +21,7 @@ int exit_check(char **cmd, env_t *env)
  * Return: Nothing:
  */
 
-int exit_shell(char **cmd, env_t *env)
+void exit_shell(char **cmd, env_t *env)
 {
 	int i;
 	char *stat = cmd[1], exit_value = 0;
@@ -29,7 +29,7 @@ int exit_shell(char **cmd, env_t *env)
 	if (!stat)
 	{
 		env->in_shell = 0;
-		return (1);
+		return;
 
 	}
 
@@ -38,14 +38,12 @@ int exit_shell(char **cmd, env_t *env)
 		if (stat[i] < '0' || stat[i] > '9' || stat[i] == '-')
 		{
 			env->status = 2;
-			env->in_shell = 1;
-			exit(EXIT_SUCCESS);
+			return;
 		}
 
 	exit_value = atoi(stat);
 	env->exit_sig = exit_value;
 	env->in_shell = 0;
-	return (1);
 
 }
 
@@ -86,7 +84,7 @@ void echo_exit_status(char **cmd, env_t *env)
 }
 
 
-int echo_parser(char **cmd, env_t *env)
+void echo_parser(char **cmd, env_t *env)
 {
 	char *parser = cmd[1];
 
@@ -103,7 +101,6 @@ int echo_parser(char **cmd, env_t *env)
 		write(STDOUT_FILENO, "Invalid Argument\n", 17);
 	}
 
-	return (0);
 }
 
 void echo_ppid(char **cmd, env_t *env)
