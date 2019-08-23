@@ -1,7 +1,7 @@
 #include "holberton.h"
 
 
-void print_env(char **cmd, env_t *env)
+int print_env(char **cmd, env_t *env)
 {
 	extern char **environ;
 	unsigned int i, length;
@@ -14,4 +14,8 @@ void print_env(char **cmd, env_t *env)
                 write(STDOUT_FILENO, "\n", 1);
 
 	}
+
+	print_list(env);
+	env->status = 0;
+	return (0);
 }

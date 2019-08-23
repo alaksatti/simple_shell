@@ -49,12 +49,6 @@ int set_env(char **cmd, env_t *env)
 /**
 	reverse_list(&(env->env_var));
 **/
-
-/**
-
-	print_list(env->env_var);
-**/
-
 	return (0);
 }
 
@@ -125,20 +119,31 @@ void addnode(est_env **head, char *var, char *value)
  * Return: nothing.
  */
 
-void print_list(est_env *h)
+void print_list(env_t *env)
 {
+	est_env *h = env->env_var;
+
+	int i;
 
         while (h)
         {
                 if (h->envar)
 		{
-                        printf("%s\n", h->envar);
 
-			printf("%s\n", h->value);
+
+			for (i = 0; h->envar[i] != '\0'; i++)
+				_putchar(h->envar[i]);
+
+			_putchar('=');
+
+			for (i = 0; h->value[i] != '\0'; i++)
+				_putchar(h->value[i]);
+
+			_putchar('\n');
 		}
 
                 else
-                        printf("[0] (nil)\n");
+                        write(STDERR_FILENO, "CANNOT PRINT SETENV VAR\n", 25);
 
                 h = h->next;
 

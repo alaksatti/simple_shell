@@ -9,7 +9,7 @@ int main(void)
 	size_t len = 0;
 	ssize_t chars_read = 0, chars_write;
 	pid_t pid;
-	int fail_check = 0;
+	int fail_check = 0, status;
 	char *command_path = NULL;
 
 
@@ -57,11 +57,11 @@ int main(void)
 				fail_check = is_builtin(args, &env);
 
 			if (fail_check == -1)
-				printf("ERROR\n");
+				return (0);
 
 		}
 		else
-			wait(NULL);
+			env.status = wait(&status);
 	}
 	return (0);
 }

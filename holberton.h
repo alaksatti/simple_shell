@@ -117,6 +117,6 @@ void echo_ppid(char **cmd, env_t *env);
 void echo_exit_status(char **cmd, env_t *env);
 void addnode(est_env **head, char *var, char *value);
 int set_env(char **cmd, env_t *env);
-void print_list(est_env *h);
 void reverse_list(est_env **head);
+void print_list(env_t *env);
 #endif
