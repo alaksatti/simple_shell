@@ -34,14 +34,10 @@ int main(void)
 
 		args = tokenize(line);
 
-		exit_check(args, &env);
-
 		pid = fork();
 
 		if (pid == 0)
 		{
-
-
 			/* search user typed ls*/
 /**
 			command_path = search_path(args[0]);
@@ -53,16 +49,22 @@ int main(void)
 			args[0] = command_path;
 **/
 			fail_check = execve(args[0], args, NULL);
-
+			if (!fail_check)
+				break;
 		}
 		else
-			wait(&status);
+                {
+                        wait(&status);
+                        env.status = status;
+			return;
+		}
 
 		if (fail_check == -1)
 			fail_check = is_builtin(args, &env);
 
-		if (!fail_check)
-			return (0);
+		if (fail_check == -1)
+			write(STDERR_FILENO, "INVALID COMMAND\n", 16);
+
 	} while (env.in_shell && chars_read != -1);
 
 	return (0);

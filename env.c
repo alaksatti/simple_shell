@@ -8,7 +8,7 @@
  */
 
 
-void set_env(char **cmd, env_t *env)
+int set_env(char **cmd, env_t *env)
 {
 
 	est_env *nodescanner = env->env_var;
@@ -52,6 +52,8 @@ void set_env(char **cmd, env_t *env)
 /**
 	reverse_list(&(env->env_var));
 **/
+
+	return (0);
 }
 
 /**
@@ -121,7 +123,7 @@ void addnode(est_env **head, char *var, char *value)
  * Return: nothing.
  */
 
-void print_list(env_t *env)
+int print_list(env_t *env)
 {
 	est_env *h = env->env_var;
 
@@ -150,7 +152,7 @@ void print_list(env_t *env)
                 h = h->next;
 
         }
-
+	return (0);
 }
 /**
  * reverse_list - reverses linked list.
@@ -198,7 +200,7 @@ unsigned int sortlist(est_env *list, char *cmd)
 
 	if (!list)
 	{
-		write(STDERR_FILENO, "VARIABLE NOT PREV SET\n", 23);
+		write(STDERR_FILENO, "VARIABLE NOT PREV SET\n", 20);
 		return;
 	}
 
@@ -212,7 +214,7 @@ unsigned int sortlist(est_env *list, char *cmd)
  * @env: struc of variables.
  * Return: Nothing.
  */
-void unset_env(char **cmd, env_t *env)
+int unset_env(char **cmd, env_t *env)
 {
 
         est_env *nodescanner = env->env_var, *prevnode = env->env_var;
@@ -274,5 +276,5 @@ void unset_env(char **cmd, env_t *env)
 
 	else
 		env->status = -1;
-
+	return (0);
 }

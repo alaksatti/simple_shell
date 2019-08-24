@@ -6,6 +6,7 @@ env_t *init_env(env_t *env)
 	env->status = 0;
 	env->exit_sig = 0;
 	env->env_var = NULL;
+	env->pid = getpid();
 
 	return (env);
 }

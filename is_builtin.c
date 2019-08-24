@@ -8,10 +8,10 @@ int is_builtin(char **cmd, env_t *env)
 	b_t built_in_list[] = {
 
 		{"env", print_env},
-		{"exit", exit_shell},
 		{"echo", echo_parser},
 		{"setenv", set_env},
-		{"unsetenv", unset_env}, 
+		{"unsetenv", unset_env},
+		{"exit", exit_shell},
 /**
 		{"help", help},
 		{"history", history},
@@ -27,15 +27,18 @@ int is_builtin(char **cmd, env_t *env)
 	{
 		if(!_strcmp(built_in_list[i].cmd, cmd[0]))
 		{
-			built_in_list[i].func(cmd, env);
-			return;
+			return (built_in_list[i].func(cmd, env));
 		}
 		++i;
 	}
 
+	if (i > 4)
+	{
+		env->status = -1;
 
-	write(STDERR_FILENO, "Invalid built-in command\n", 25);
+		printf("%i\n", i);
+		return (-1);
+	}
+	return (0);
 
-
-	return (-1);
 }

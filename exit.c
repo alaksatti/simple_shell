@@ -1,19 +1,19 @@
 #include "holberton.h"
 
+
 /**
  * exit-check - checks if the argument is asking to exit shell.
  * @cmd: command
  * @env: struct with env variables.
  * Return: nothing.
- */
 
-void exit_check(char **cmd, env_t *env)
+int exit_check(char **cmd, env_t *env)
 {
 
         if ((_strcmp(cmd[0], "exit") == 0))
 		exit_shell(cmd, env);
 }
-
+**/
 /**
  * exit_shell - exits the shell.
  * @cmd: command.
@@ -21,7 +21,7 @@ void exit_check(char **cmd, env_t *env)
  * Return: Nothing:
  */
 
-void exit_shell(char **cmd, env_t *env)
+int exit_shell(char **cmd, env_t *env)
 {
 	int i;
 	char *stat = cmd[1], exit_value = 0;
@@ -29,8 +29,7 @@ void exit_shell(char **cmd, env_t *env)
 	if (!stat)
 	{
 		env->in_shell = 0;
-		return;
-
+		return(0);
 	}
 
 	for (i = 0; stat[i]; i++)
@@ -38,13 +37,14 @@ void exit_shell(char **cmd, env_t *env)
 		if (stat[i] < '0' || stat[i] > '9' || stat[i] == '-')
 		{
 			env->status = 2;
-			return;
+			write(STDERR_FILENO, "Invalid Argument\n", 17);
+			return (0);
 		}
 
 	exit_value = atoi(stat);
 	env->exit_sig = exit_value;
 	env->in_shell = 0;
-
+	return (0);
 }
 
 
@@ -56,7 +56,7 @@ void exit_shell(char **cmd, env_t *env)
  * Return: Nothing.
  */
 
-void echo_exit_status(char **cmd, env_t *env)
+int echo_exit_status(char **cmd, env_t *env)
 {
 	int digit = env->status, i, j;
 	char *buffer, *stat;
@@ -80,36 +80,44 @@ void echo_exit_status(char **cmd, env_t *env)
 
 	free(buffer);
 
-	exit(EXIT_SUCCESS);
+	return (0);
 }
 
 
-void echo_parser(char **cmd, env_t *env)
+int echo_parser(char **cmd, env_t *env)
 {
 	char *parser = cmd[1];
 
+	if (!cmd[1])
+	{
+		env->status = -1;
+		write(STDERR_FILENO, "Invalid Argument\n", 17);
+		return (0);
 
-	if (_strcmp("$?", parser) == 0)
-		echo_exit_status(cmd, env);
+	}
 
-	else if (_strcmp("$$", parser) == 0)
-		 echo_ppid(cmd, env);
+	else if (_strcmp("$?", parser) == 0 && cmd[1])
+		return(echo_exit_status(cmd, env));
+
+	else if (_strcmp("$$", parser) == 0 && cmd[1])
+		return(echo_pid(cmd, env));
 
 	else
 	{
 		env->status = -1;
-		write(STDOUT_FILENO, "Invalid Argument\n", 17);
+		write(STDERR_FILENO, "Invalid Argument\n", 17);
+		return (0);
 	}
 
+	return (0);
 }
 
-void echo_ppid(char **cmd, env_t *env)
+int echo_pid(char **cmd, env_t *env)
 {
 	int mypid, i, j;
 	char *buffer, *pid;
 
-
-	mypid = getpid();
+	mypid = env->pid;
 
 
 	for (i = 0; mypid; i++)
@@ -120,8 +128,9 @@ void echo_ppid(char **cmd, env_t *env)
 
 	if (buffer)
         {
+		mypid = env->pid;
 
-                pid = itoa(getpid(), buffer, env);
+                pid = itoa(mypid, buffer, env);
 
                 for (j = 0; pid[j]; j++)
                         _putchar(pid[j]);
@@ -129,8 +138,13 @@ void echo_ppid(char **cmd, env_t *env)
                 _putchar('\n');
 	}
 
-	env->status = 0;
+	else
+	{
+		env->status = -1;
+		write(STDERR_FILENO, "ERROR\n", 6);
+	}
 
         free(buffer);
 
+	return (0);
 }
