@@ -18,15 +18,16 @@ int main(void)
 
 	interactive = is_interactive();
 
-
-	while (env.in_shell && chars_read != -1)
+	do
 	{
 		if (interactive)
 		{
 			chars_write = write(STDOUT_FILENO, "$ ", 2);
+			env.in_shell = 1;
 			if (chars_write == -1)
 				return (1);
 		}
+
 		chars_read = getline(&line, &len, stdin);
 		if (chars_read == -1)
 			return (1);
@@ -53,15 +54,16 @@ int main(void)
 **/
 			fail_check = execve(args[0], args, NULL);
 
-			if (fail_check == -1)
-				fail_check = is_builtin(args, &env);
-
-			if (fail_check == -1)
-				return (0);
-
 		}
 		else
 			wait(&status);
-	}
+
+		if (fail_check == -1)
+			fail_check = is_builtin(args, &env);
+
+		if (!fail_check)
+			return (0);
+	} while (env.in_shell && chars_read != -1);
+
 	return (0);
 }
