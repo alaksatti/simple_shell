@@ -16,27 +16,6 @@ extern char **environ;
 
 
 /**
- *
- *
- *
- */
-
-
-
-typedef struct tokens
-{
-	char *cmd;
-	char **(*func)(char *);
-
-
-}token;
-
-
-
-
-
-
-/**
  * struct est_env - singly linked list.
  * @env: env var to be evaluated.
  * @value: value of env var.
