@@ -5,7 +5,7 @@ int main(void)
 {
 	env_t env;
 	bool interactive;
-	char *line = NULL, **args;
+	char *line = NULL, **args, **pargs, **pargs2;
 	size_t len = 0;
 	ssize_t chars_read = 0, chars_write;
 	pid_t pid;
@@ -15,10 +15,10 @@ int main(void)
 
 
 	init_env(&env);
-
+	store_env(&env);
 	interactive = is_interactive();
 
-	do
+	while (env.in_shell && chars_read != -1)
 	{
 		if (interactive)
 		{
@@ -31,6 +31,7 @@ int main(void)
 		chars_read = getline(&line, &len, stdin);
 		if (chars_read == -1)
 			return (1);
+
 
 		args = tokenize(line);
 
@@ -49,14 +50,13 @@ int main(void)
 			args[0] = command_path;
 **/
 			fail_check = execve(args[0], args, NULL);
-			if (!fail_check)
-				break;
+
+
 		}
 		else
                 {
                         wait(&status);
                         env.status = status;
-			return;
 		}
 
 		if (fail_check == -1)
@@ -65,7 +65,6 @@ int main(void)
 		if (fail_check == -1)
 			write(STDERR_FILENO, "INVALID COMMAND\n", 16);
 
-	} while (env.in_shell && chars_read != -1);
-
+	}
 	return (0);
 }

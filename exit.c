@@ -132,10 +132,11 @@ int echo_pid(char **cmd, env_t *env)
 
                 pid = itoa(mypid, buffer, env);
 
-                for (j = 0; pid[j]; j++)
+		for (j = 0; pid[j]; j++)
                         _putchar(pid[j]);
 
-                _putchar('\n');
+		_putchar('\n');
+
 	}
 
 	else

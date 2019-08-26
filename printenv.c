@@ -3,18 +3,53 @@
 
 int print_env(char **cmd, env_t *env)
 {
-	extern char **environ;
-	unsigned int i, length;
 
+	est_env *nodescanner = env->env_var;
+	char *var, *value;
 
-	for (i = 0; environ[i]; i++)
+	if (nodescanner)
 	{
-		length = strlen(environ[i]);
-                write(STDOUT_FILENO, environ[i], length);
-                write(STDOUT_FILENO, "\n", 1);
+
+		while (nodescanner && nodescanner->envar)
+		{
+			var = nodescanner->envar;
+			value = nodescanner->value;
+
+			write(STDOUT_FILENO, var, _strlen(var));
+			_putchar('=');
+			write(STDOUT_FILENO, value, _strlen(value));
+			_putchar('\n');
+
+			nodescanner = nodescanner->next;
+		}
 
 	}
 
-	return (print_list(env));
+
+	return (0);
+}
+
+
+
+
+void store_env(env_t *env)
+{
+	extern char **environ;
+	int i;
+	char **cmd;
+
+
+
+	for (i = 0; environ[i]; i++)
+        {
+
+		cmd = tokenize_env(environ[i]);
+
+		addnode(&(env->env_var), cmd[0], cmd[1]);
+		free(cmd);
+
+
+        }
 	return;
+
 }

@@ -16,6 +16,27 @@ extern char **environ;
 
 
 /**
+ *
+ *
+ *
+ */
+
+
+
+typedef struct tokens
+{
+	char *cmd;
+	char **(*func)(char *);
+
+
+}token;
+
+
+
+
+
+
+/**
  * struct est_env - singly linked list.
  * @env: env var to be evaluated.
  * @value: value of env var.
@@ -119,7 +140,18 @@ int echo_exit_status(char **cmd, env_t *env);
 void addnode(est_env **head, char *var, char *value);
 int set_env(char **cmd, env_t *env);
 void reverse_list(est_env **head);
-int print_list(env_t *env);
+int print_list(env_t **env);
 int unset_env(char **cmd, env_t *env);
-unsigned int sortlist(est_env *list, char *cmd);
+unsigned int sortlist(est_env **list, char *cmd);
+int deletenode(est_env **head, char *var);
+char **tokenize_env(char *line);
+void store_env(env_t *env);
+char **tokenize(char *line);
+char **tokenize_semi(char *line);
+int shell_repeat(char **argument);
+
+/**
+char **parseOR(char **tmp);
+char **parseAND(char **tmp);
+**/
 #endif

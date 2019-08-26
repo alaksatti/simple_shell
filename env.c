@@ -18,8 +18,7 @@ int set_env(char **cmd, env_t *env)
 	var = cmd[1];
 	value = cmd[2];
 
-
-	if (env && value && !cmd[3])
+	if (var && value && !cmd[3])
 	{
 		if (!nodescanner)
 		{
@@ -111,10 +110,14 @@ void addnode(est_env **head, char *var, char *value)
                 while (end->next)
                         end = end->next;
                 end->next = node;
+		node->next = NULL;
         }
-        else
+     else
+     {
 
                 *head = node;
+		node->next = NULL;
+     }
 }
 
 /**
@@ -123,15 +126,27 @@ void addnode(est_env **head, char *var, char *value)
  * Return: nothing.
  */
 
-int print_list(env_t *env)
+int print_list(env_t **env)
 {
-	est_env *h = env->env_var;
+	est_env *h = (*env)->env_var;
 
 	int i;
 
+
+	if (!h)
+	{
+		printf("h is null");
+		return (0);
+	}
+
         while (h)
         {
-                if (h->envar)
+
+		printf("%s=%s\n", h->envar, h->value);
+
+
+/**
+                if (h->envar && h->value)
 		{
 
 
@@ -149,7 +164,10 @@ int print_list(env_t *env)
                 else
                         write(STDERR_FILENO, "CANNOT PRINT SETENV VAR\n", 25);
 
-                h = h->next;
+**/
+
+
+                h = (h)->next;
 
         }
 	return (0);
@@ -183,7 +201,7 @@ void reverse_list(est_env **head)
 }
 
 
-
+/**
 unsigned int sortlist(est_env *list, char *cmd)
 {
 	unsigned int index = 0;
@@ -208,12 +226,14 @@ unsigned int sortlist(est_env *list, char *cmd)
 }
 
 
-/**
+
  * unset_env - deletes an env variable.
  * @cmd: command.
  * @env: struc of variables.
  * Return: Nothing.
  */
+
+/**
 int unset_env(char **cmd, env_t *env)
 {
 
@@ -230,7 +250,7 @@ int unset_env(char **cmd, env_t *env)
 	}
 
 
-	if (!cmd[1] && cmd[2])
+	if (!cmd[1])
 	{
 		write(STDERR_FILENO, "ARGUMENT ERROR\n", 15);
 		env->status = -1;
@@ -241,8 +261,10 @@ int unset_env(char **cmd, env_t *env)
 	index = sortlist(env->env_var, cmd[1]);
 
 	printf("%i\n\n\n\n\n", index);
+
         if (index == 0)
         {
+		printf("%i\n", env->in_shell);
 
                 env->env_var = env->env_var->next;
 		free(nodescanner->envar);
@@ -258,6 +280,10 @@ int unset_env(char **cmd, env_t *env)
 
 
         }
+
+
+	printf("%i\n", env->in_shell);
+
         if (idx == index)
         {
 		printf("/n/nright here");
@@ -276,5 +302,12 @@ int unset_env(char **cmd, env_t *env)
 
 	else
 		env->status = -1;
+
+
+
+
+	printf("%i\n", env->in_shell);
+
 	return (0);
 }
+**/
