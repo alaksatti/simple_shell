@@ -39,11 +39,12 @@ void store_env(env_t *env)
 	char **cmd;
 
 
+	char **env = environ;
 
-	for (i = 0; environ[i]; i++)
+	for (i = 0; env[i]; i++)
         {
 
-		cmd = tokenize_env(environ[i]);
+		cmd = tokenize_env(env[i]);
 
 		addnode(&(env->env_var), cmd[0], cmd[1]);
 		free(cmd);
