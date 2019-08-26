@@ -12,12 +12,9 @@ int main(void)
 	int fail_check = 0, status;
 	char *command_path = NULL;
 
-
-
 	init_env(&env);
 	store_env(&env);
 	interactive = is_interactive();
-
 	while (env.in_shell && chars_read != -1)
 	{
 		if (interactive)
@@ -27,22 +24,17 @@ int main(void)
 			if (chars_write == -1)
 				return (1);
 		}
-
 		chars_read = getline(&line, &len, stdin);
 		if (chars_read == -1)
 			return (1);
-
-
 		args = tokenize(line);
-
 		pid = fork();
-
 		if (pid == 0)
 		{
 			/* search user typed ls*/
-/**
 			command_path = search_path(args[0]);
-			if (command_path == NULL)
+			printf("%s\n", command_path);
+/*			if (command_path == NULL)
 			  command_path = search_builtins(args[0]);
 			 if (command_path == NULL)
 				return (1);
