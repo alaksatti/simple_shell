@@ -48,12 +48,12 @@ int main(int ac, char *av[])
 				if (command_path != NULL)
 					args[0] = command_path;
 				fail_check2 = execve(_strdup(args[0]), args, NULL);
-/*				if (command_path)
+				if (command_path)
 				{
 					free(command_path);
 					command_path = NULL;
 				}
-*/			}
+			}
 			else
 			{
 				wait(&status);
