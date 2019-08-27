@@ -9,7 +9,7 @@ int main(void)
 	size_t len = 0;
 	ssize_t chars_read = 0, chars_write;
 	pid_t pid;
-	int fail_check = 0, status;
+	int fail_check = 0, fail_check2 = 0, status;
 	char *command_path = NULL;
 
 
@@ -30,41 +30,43 @@ int main(void)
 
 		chars_read = getline(&line, &len, stdin);
 		if (chars_read == -1)
+		{
+			free(line);
 			return (1);
-
+		}
 
 		args = tokenize(line);
 
-		pid = fork();
 
-		if (pid == 0)
+
+		fail_check = is_builtin(args, &env);
+
+		if (fail_check == -1)
 		{
-			/* search user typed ls*/
-/**
-			command_path = search_path(args[0]);
-			if (command_path == NULL)
-			  command_path = search_builtins(args[0]);
-			 if (command_path == NULL)
-				return (1);
+			pid = fork();
 
-			args[0] = command_path;
-**/
-			fail_check = execve(args[0], args, NULL);
+			if (pid == 0)
+			{
+
+				fail_check2 = execve(args[0], args, NULL);
 
 
-		}
-		else
-                {
-                        wait(&status);
-                        env.status = status;
+			}
+			else
+			{
+				wait(&status);
+				env.status = status;
+			}
 		}
 
-		if (fail_check == -1)
-			fail_check = is_builtin(args, &env);
 
-		if (fail_check == -1)
-			write(STDERR_FILENO, "INVALID COMMAND\n", 16);
+			if (fail_check2 == -1)
+			{
+
+				write(STDERR_FILENO, "INVALID COMMAND\n", 16);
+			}
 
 	}
+
 	return (0);
 }
