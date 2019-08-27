@@ -41,6 +41,8 @@ int main(void)
 			if (command_path != NULL)
 				args[0] = command_path;
 			fail_check = execve(args[0], args, NULL);
+			if (command_path)
+				free(command_path);
 		}
 		else
                 {
