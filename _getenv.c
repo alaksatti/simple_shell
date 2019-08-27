@@ -1,25 +1,22 @@
 #include "holberton.h"
-extern char **environ;
 
-char *_getenv(const char *name)
+char *_getenv(char *name, env_t *env)
 {
-	char *value = NULL;
-	int i, j, len;
+	est_env *env_var = env->env_var;
+	int i;
 
-	for (i = 0; environ[i]; i++)
+	while (env_var)
 	{
-		for (j = 0; name[j] && environ[i][j] == name[j]; j++)
-			;
-		if (environ[i][j] == '=')
-			break;
+		for (i = 0; env_var->envar[i]; i++)
+		{
+			if (env_var->envar[i] != name[i])
+				break;
+		}
+		if (i == _strlen(name))
+		{
+			return (env_var->value);
+		}
+		env_var = env_var->next;
 	}
-	j++;
-	for (len = 0; environ[i][len + j]; len++)
-		;
-	value = malloc(len + 1);
-	if (!value)
-		exit(1);
-	for (len = 0; environ[i][len + j]; len++)
-		value[len] = environ[i][len + j];
-	return (value);
+	return (NULL);
 }

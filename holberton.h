@@ -98,7 +98,7 @@ typedef struct help_list
 int _strlen(char *string);
 bool is_interactive(void);
 char **tokenize(char *line);
-char *_getenv(const char *name, env_t *env);
+char *_getenv(char *name, env_t *env);
 char *search_path(char *command, env_t *env);
 int _putchar(char c);
 int print_env(char **environ, env_t *env);

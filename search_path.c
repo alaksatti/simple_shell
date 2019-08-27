@@ -1,12 +1,13 @@
 #include "holberton.h"
 
-char *search_path(char *command)
+char *search_path(char *command, env_t *env)
 {
-	char *dir, *value = _getenv("PATH");
+	char *dir, *value = _getenv("PATH", env);
 	char *command_path;
 	int i, j;
 	struct stat st;
 
+	printf("value: %s\n", value);
 	dir = strtok(value, ":\n");
 	while (dir != NULL)
 	{
