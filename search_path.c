@@ -1,5 +1,11 @@
 #include "holberton.h"
 
+/**
+ * search_path - searches for an executable in the PATH directories
+ * @command: name of the executable to find
+ * @env: linked list of env variables which contains PATH
+ * Return: full path to the executable
+ */
 char *search_path(char *command, env_t *env)
 {
 	char *dir, *value = _getenv("PATH", env);
