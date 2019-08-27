@@ -13,39 +13,8 @@ int unset_env(char **cmd, env_t *env)
 
 	var = cmd[1];
 
-
-
-	printf("starts\n\n\n\n\n ");
-
-	if (!nodescanner)
-	{
-      		write(STDERR_FILENO, "VARIABLE NOT PREV SET\n", 23);
-       		env->status = -1;
-		printf("finishes in empty list\n\n\n\n\n ");
-		return (0);
-	}
-
-	printf("finished here");
-
-	 if (env && var && !cmd[2])
-	 {
-
-	    while (nodescanner)
-	    {
-		    node = (nodescanner->envar);
-		    if (!_strcmp(var, node))
-		    {
-			    printf("enters if\n\n\n\n\n ");
-			    return (deletenode(&nodescanner, var));
-			    printf("After");
-		    }
-
-		    nodescanner = (nodescanner->next);
-		    printf("in while\n\n\n\n\n ");
-	    }
-
-	    printf("finished hereiuerfkjbef");
-	 }
+	if (env && var && !cmd[2])
+		return (deletenode(&env->env_var, var));
 
 
 	else if(!cmd[1])
@@ -60,10 +29,8 @@ int unset_env(char **cmd, env_t *env)
                 write(STDERR_FILENO, "Invalid Argument\n", 17);
         }
 
-	 return (0);
+	return (0);
 
-
-	 printf("finished here");
 }
 
 
@@ -74,17 +41,17 @@ unsigned int sortlist(est_env **list, char *cmd)
 
         est_env *currentnode = *list, *next = *list;
 
-        while (*list && _strcmp(cmd, currentnode->envar))
+        while (next && _strcmp(cmd, currentnode->envar))
         {
-                currentnode = *list;
-                *list = next->next;
+                currentnode = next;
+                next = next->next;
                 index++;
-
         }
 
-        if (!*list)
+        if (!next)
         {
-                write(STDERR_FILENO, "VARIABLE NOT PREV SET\n", 20);
+                write(STDERR_FILENO, "VARIABLE NOT PREV SET\n", 23);
+		return;
         }
 
         return (index);
@@ -108,6 +75,7 @@ int deletenode(est_env **head, char *var)
 
 	index = sortlist(head, var);
 
+
 	if (!*head)
                 return (0);
 
@@ -118,21 +86,23 @@ int deletenode(est_env **head, char *var)
                 free(nodescanner);
                 return (1);
         }
-        while (nodescanner && idx != index)
-        {
+        while (nodescanner)
+	{
+		if ((idx + 1) == index)
+			break;
+
                 idx++;
-                prevnode = nodescanner;
+		prevnode = nodescanner;
                 nodescanner = nodescanner->next;
 
-
         }
-        if (idx == index)
+
+
+        if ((idx + 1) == index)
         {
 
                 targetnode = nodescanner;
-
                 prevnode->next = targetnode->next;
-
                 free(targetnode);
 
                 return (1);

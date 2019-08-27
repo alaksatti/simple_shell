@@ -109,3 +109,35 @@ int _strlen(char *s)
                 count++;
         return (count);
 }
+
+
+char *_strdup(char *str)
+{
+
+        char *arr = NULL;
+        unsigned int i;
+
+
+
+        if (str)
+        {
+                for (i = 0; str[i] != '\0'; ++i)
+                        ;
+
+                arr = (char *)malloc(sizeof(char) * i + 1);
+
+        }
+
+        if (arr)
+        {
+                for (i = 0; str[i] != 0; i++)
+                        arr[i] = str[i];
+                arr[i] = '\0';
+        }
+
+        return (arr);
+
+
+
+
+}

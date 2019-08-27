@@ -1,5 +1,4 @@
 #include "holberton.h"
-extern char **environ;
 
 char *_getenv(const char *name)
 {
@@ -22,4 +21,17 @@ char *_getenv(const char *name)
 	for (len = 0; environ[i][len + j]; len++)
 		value[len] = environ[i][len + j];
 	return (value);
+}
+
+
+void printt_environ(void)
+{
+	int i;
+	extern char **environ;
+
+
+
+	for (i = 0; environ[i]; i++)
+		printf("After strok in separate function: %s\n", environ[i]);
+
 }

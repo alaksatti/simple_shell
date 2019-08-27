@@ -81,13 +81,13 @@ void addnode(est_env **head, char *var, char *value)
 
                 if (var && value)
                 {
-                        node->envar = strdup(var);
+                        node->envar = _strdup(var);
                         if (!node->envar)
 			{
                                 free(node);
                                 return;
                         }
-			node->value = strdup(value);
+			node->value = _strdup(value);
 			if (!node->envar)
                         {
 				free(node->envar);
@@ -118,60 +118,13 @@ void addnode(est_env **head, char *var, char *value)
                 *head = node;
 		node->next = NULL;
      }
+
+
 }
 
-/**
- * print_list - prints linked list.
- * @h: pointer to linked list.
- * Return: nothing.
- */
-
-int print_list(env_t **env)
-{
-	est_env *h = (*env)->env_var;
-
-	int i;
 
 
-	if (!h)
-	{
-		printf("h is null");
-		return (0);
-	}
 
-        while (h)
-        {
-
-		printf("%s=%s\n", h->envar, h->value);
-
-
-/**
-                if (h->envar && h->value)
-		{
-
-
-			for (i = 0; h->envar[i] != '\0'; i++)
-				_putchar(h->envar[i]);
-
-			_putchar('=');
-
-			for (i = 0; h->value[i] != '\0'; i++)
-				_putchar(h->value[i]);
-
-			_putchar('\n');
-		}
-
-                else
-                        write(STDERR_FILENO, "CANNOT PRINT SETENV VAR\n", 25);
-
-**/
-
-
-                h = (h)->next;
-
-        }
-	return (0);
-}
 /**
  * reverse_list - reverses linked list.
  * @head: pointer to end of list.

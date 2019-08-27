@@ -30,27 +30,24 @@ int print_env(char **cmd, env_t *env)
 }
 
 
-
-
 void store_env(env_t *env)
 {
 	extern char **environ;
 	int i;
-	char **cmd;
+	char **cmd, **var = environ;
 
 
-	char **var = environ;
 
 	for (i = 0; var[i]; i++)
-        {
-
+	{
 		cmd = tokenize_env(var[i]);
 
 		addnode(&(env->env_var), cmd[0], cmd[1]);
+
 		free(cmd);
 
+	}
 
-        }
 	return;
 
 }

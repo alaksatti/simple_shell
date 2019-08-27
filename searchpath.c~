@@ -1,0 +1,23 @@
+#include "holberton.h"
+
+
+
+void search_PATH(est_env *list)
+{
+	char *value;
+
+	value = sortlist(&list, char *cmd)
+
+
+
+
+
+
+
+
+
+
+
+
+
+}

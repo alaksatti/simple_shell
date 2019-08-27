@@ -32,9 +32,21 @@ typedef struct est_env
 
 
 }est_env;
+/**
+ * struct hist_t - singly linked list
+ * @cmd: string - (malloc string)
+ * @next: points to the next node.
+ *
+ * Description: singly linked list node structure.
+ */
 
 
+typedef struct hist_t
+{
 
+        char *cmd;
+        struct hist_t *next;
+} hist_t;
 
 
 /**
@@ -49,22 +61,10 @@ typedef struct env_t
 	int exit_sig;
 	struct est_env *env_var;
 	pid_t pid;
+	hist_t history;
+	int count;
 }env_t;
 
-/**
- * struct hist_t - singly linked list
- * @cmd: string - (malloc'ed string)
- * @next: points to the next node.
- *
- * Description: singly linked list node structure.
- */
-
-typedef struct hist_t
-{
-
-        char *cmd;
-        struct hist_t *next;
-} hist_t;
 
 /**
  * struct b_t - struct for built in functions.
@@ -128,7 +128,9 @@ void store_env(env_t *env);
 char **tokenize(char *line);
 char **tokenize_semi(char *line);
 int shell_repeat(char **argument);
-
+void printt_environ(void);
+void free_listint2(est_env **head);
+char *_strdup(char *str);
 /**
 char **parseOR(char **tmp);
 char **parseAND(char **tmp);

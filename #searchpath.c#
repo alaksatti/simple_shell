@@ -1,0 +1,27 @@
+#include "holberton.h"
+
+
+
+void search_PATH(est_env *list)
+{
+        est_env *nodescanner = *head, *prevnode = *head, *targetnode;
+	char *value;
+
+        if (!*head)
+		return (0);
+
+        while (nodescanner && _strcmp("PATH", prevnode->envar))
+	{
+                prevnode = nodescanner;
+                nodescanner = nodescanner->next;
+        }
+
+
+        if (!_strcmp("PATH", prevnode->envar))
+        {
+		value = prevnode->value;
+		strtok(value, "\\");
+        }
+
+        return (0);
+}
