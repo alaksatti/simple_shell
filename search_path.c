@@ -27,10 +27,13 @@ char *search_path(char *command, env_t *env)
 			command_path[i + j] = command[j];
 		command_path[i + j] = '\0';
 		if (stat(command_path, &st) == 0)
-			break;
+		{
+			free(value);
+			return (command_path);
+		}
 		free(command_path);
 		dir = strtok(NULL, ":\n");
 	}
 	free(value);
-	return (command_path);
+	return (NULL);
 }

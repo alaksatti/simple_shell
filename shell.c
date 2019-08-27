@@ -1,7 +1,7 @@
 #include "holberton.h"
 #include <stdio.h>
 
-int main(void)
+int main(int ac, char *av[])
 {
 	env_t env;
 	bool interactive;
@@ -12,7 +12,8 @@ int main(void)
 	int fail_check = 0, fail_check2 = 0, status;
 	char *command_path = NULL;
 
-	init_env(&env);
+	(void)ac;
+	init_env(&env, av[0]);
 	store_env(&env);
 	interactive = is_interactive();
 	while (env.in_shell && chars_read != -1)
@@ -46,11 +47,13 @@ int main(void)
 				command_path = search_path(args[0], &env);
 				if (command_path != NULL)
 					args[0] = command_path;
-				if (command_path)
+				fail_check2 = execve(_strdup(args[0]), args, NULL);
+/*				if (command_path)
+				{
 					free(command_path);
-
-				fail_check2 = execve(args[0], args, NULL);
-			}
+					command_path = NULL;
+				}
+*/			}
 			else
 			{
 				wait(&status);
@@ -58,9 +61,9 @@ int main(void)
 			}
 
 			if (fail_check2 == -1)
-			{
-
-				write(STDERR_FILENO, "INVALID COMMAND\n", 16);
+			{		
+				error_msg(&env, args[0]);
+				env.count++;
 			}
 		}
 
