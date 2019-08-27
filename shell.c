@@ -32,8 +32,8 @@ int main(void)
 		if (pid == 0)
 		{
 			/* search user typed ls*/
-			command_path = search_path(args[0]);
-			printf("%s\n", command_path);
+			command_path = search_path(args[0], &env);
+			printf("cmd_path: %s\n", command_path);
 /*			if (command_path == NULL)
 			  command_path = search_builtins(args[0]);
 			 if (command_path == NULL)
