@@ -62,6 +62,7 @@ int main(void)
 
 				write(STDERR_FILENO, "INVALID COMMAND\n", 16);
 			}
+		}
 
 	}
 
