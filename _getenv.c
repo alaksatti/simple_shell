@@ -1,26 +1,23 @@
 #include "holberton.h"
 
-char *_getenv(const char *name)
+/**
+ * _getenv - returns a copy of the environmental variable value
+ * @name: string name of the environmental variable to retrieve
+ * @env: linked list containing environmental variables
+ * Return: copy of the value of the environmental variable
+ */
+char *_getenv(char *name, env_t *env)
 {
-	char *value = NULL;
-	int i, j, len;
+	est_env *env_var = env->env_var;
+	int i;
 
-	for (i = 0; environ[i]; i++)
+	while (env_var)
 	{
-		for (j = 0; name[j] && environ[i][j] == name[j]; j++)
-			;
-		if (environ[i][j] == '=')
-			break;
+		if (_strcmp(name, env_var->envar) == 0)
+			return (_strdup(env_var->value));
+		env_var = env_var->next;
 	}
-	j++;
-	for (len = 0; environ[i][len + j]; len++)
-		;
-	value = malloc(len + 1);
-	if (!value)
-		exit(1);
-	for (len = 0; environ[i][len + j]; len++)
-		value[len] = environ[i][len + j];
-	return (value);
+	return (NULL);
 }
 
 

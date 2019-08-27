@@ -12,12 +12,9 @@ int main(void)
 	int fail_check = 0, fail_check2 = 0, status;
 	char *command_path = NULL;
 
-
-
 	init_env(&env);
 	store_env(&env);
 	interactive = is_interactive();
-
 	while (env.in_shell && chars_read != -1)
 	{
 		if (interactive)
@@ -27,7 +24,6 @@ int main(void)
 			if (chars_write == -1)
 				return (1);
 		}
-
 		chars_read = getline(&line, &len, stdin);
 		if (chars_read == -1)
 		{
@@ -47,18 +43,19 @@ int main(void)
 
 			if (pid == 0)
 			{
+				command_path = search_path(args[0], &env);
+				if (command_path != NULL)
+					args[0] = command_path;
+				if (command_path)
+					free(command_path);
 
 				fail_check2 = execve(args[0], args, NULL);
-
-
 			}
 			else
 			{
 				wait(&status);
 				env.status = status;
 			}
-		}
-
 
 			if (fail_check2 == -1)
 			{
