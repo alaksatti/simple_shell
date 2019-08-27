@@ -31,19 +31,16 @@ int main(void)
 		pid = fork();
 		if (pid == 0)
 		{
-			/* search user typed ls*/
+			fail_check = 0;
 			command_path = search_path(args[0], &env);
-			printf("cmd_path: %s\n", command_path);
 /*			if (command_path == NULL)
 			  command_path = search_builtins(args[0]);
 			 if (command_path == NULL)
 				return (1);
-
-			args[0] = command_path;
-**/
+*/
+			if (command_path != NULL)
+				args[0] = command_path;
 			fail_check = execve(args[0], args, NULL);
-
-
 		}
 		else
                 {
