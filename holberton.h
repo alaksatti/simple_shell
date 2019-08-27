@@ -95,6 +95,7 @@ typedef struct help_list
 	char *helpfile;
 }help_list;
 
+char *_strdup(char *string);
 int _strlen(char *s);
 bool is_interactive(void);
 char **tokenize(char *line);

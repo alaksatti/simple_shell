@@ -105,7 +105,28 @@ int _strlen(char *s)
 {
         int i, count = 0;
 
-        for (i = 0; s && s[i] != '\0'; i++)
+        for (i = 0; s[i] != '\0'; i++)
                 count++;
         return (count);
+}
+
+/**
+ * _strdup - creates a copy of a string
+ * @string: string to copy
+ * Return: copy of the string
+ */
+char *_strdup(char *string)
+{
+	int i, len = _strlen(string);
+	char *copy;
+
+	if (len <= 0)
+		return (NULL);
+	copy = malloc(len + 1);
+	if (copy == NULL)
+		return (NULL);
+	copy[len] = '\0';
+	for (i = 0; i < len; i++)
+		copy[i] = string[i];
+	return (copy);
 }
