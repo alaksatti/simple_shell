@@ -47,7 +47,7 @@ int main(int ac, char *av[])
 				command_path = search_path(args[0], &env);
 				if (command_path != NULL)
 					args[0] = command_path;
-				fail_check2 = execve(args[0], args, NULL);
+				fail_check2 = execve(_strdup(args[0]), args, NULL);
 /*				if (command_path)
 				{
 					free(command_path);
@@ -61,8 +61,8 @@ int main(int ac, char *av[])
 			}
 
 			if (fail_check2 == -1)
-			{
-				//error_msg(&env, args[0]);
+			{		
+				error_msg(&env, args[0]);
 				env.count++;
 			}
 		}
