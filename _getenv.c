@@ -1,5 +1,11 @@
 #include "holberton.h"
 
+/**
+ * _getenv - returns a copy of the environmental variable value
+ * @name: string name of the environmental variable to retrieve
+ * @env: linked list containing environmental variables
+ * Return: copy of the value of the environmental variable
+ */
 char *_getenv(char *name, env_t *env)
 {
 	est_env *env_var = env->env_var;
