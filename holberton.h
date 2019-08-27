@@ -95,11 +95,11 @@ typedef struct help_list
 	char *helpfile;
 }help_list;
 
-
+int _strlen(char *string);
 bool is_interactive(void);
 char **tokenize(char *line);
-char *_getenv(const char *name);
-char *search_path(char *command);
+char *_getenv(const char *name, env_t *env);
+char *search_path(char *command, env_t *env);
 int _putchar(char c);
 int print_env(char **environ, env_t *env);
 void exit_check(char **cmd, env_t *env);
