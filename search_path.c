@@ -9,7 +9,7 @@
 char *search_path(char *command, env_t *env)
 {
 	char *dir, *value = _getenv("PATH", env);
-	char *command_path;
+	char *command_path = NULL;
 	int i, j;
 	struct stat st;
 
@@ -27,9 +27,10 @@ char *search_path(char *command, env_t *env)
 			command_path[i + j] = command[j];
 		command_path[i + j] = '\0';
 		if (stat(command_path, &st) == 0)
-			return (command_path);
+			break;
 		free(command_path);
 		dir = strtok(NULL, ":\n");
 	}
-	return (NULL);
+	free(value);
+	return (command_path);
 }
