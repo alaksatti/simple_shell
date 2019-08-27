@@ -7,15 +7,8 @@ char *_getenv(char *name, env_t *env)
 
 	while (env_var)
 	{
-		for (i = 0; env_var->envar[i]; i++)
-		{
-			if (env_var->envar[i] != name[i])
-				break;
-		}
-		if (i == _strlen(name))
-		{
-			return (env_var->value);
-		}
+		if (_strcmp(name, env_var->envar) == 0)
+			return (_strdup(env_var->value));
 		env_var = env_var->next;
 	}
 	return (NULL);
