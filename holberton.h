@@ -95,7 +95,7 @@ typedef struct help_list
 	char *helpfile;
 }help_list;
 
-int _strlen(char *string);
+int _strlen(char *s);
 bool is_interactive(void);
 char **tokenize(char *line);
 char *_getenv(char *name, env_t *env);
