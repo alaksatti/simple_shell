@@ -63,6 +63,7 @@ typedef struct env_t
 	pid_t pid;
 	hist_t history;
 	int count;
+	char *progname;
 }env_t;
 
 
@@ -110,7 +111,7 @@ int wordcount(char *s, char *d);
 char *eachword(char *s);
 char **_strtok(char *str, char *d);
 int _strcmp(char *s1, char *s2);
-env_t *init_env(env_t *env);
+env_t *init_env(env_t *env, char *progname);
 int exit_status(char **cmd, env_t *env);
 char *reverse(char *s, env_t *env);
 char *itoa(int num, char *s, env_t *env);
@@ -132,6 +133,7 @@ int shell_repeat(char **argument);
 void printt_environ(void);
 void free_listint2(est_env **head);
 char *_strdup(char *str);
+void error_msg(env_t *env, char *command);
 /**
 char **parseOR(char **tmp);
 char **parseAND(char **tmp);
