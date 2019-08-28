@@ -93,6 +93,5 @@ $
 
 ## Authors
 
-[Aalaa Satti](https://github.com/alaksatti)(ala.k.satti@gmail.com)
-
-[Marco Chan](https://github.com/inspiredtolive)(inspiredtolive0@gmail.com)
+[Aalaa Satti](https://github.com/alaksatti)<ala.k.satti@gmail.com>
+[Marco Chan](https://github.com/inspiredtolive)<inspiredtolive0@gmail.com>
