@@ -14,7 +14,7 @@ env_t *init_env(env_t *env, char *progname)
 	env->exit_sig = 0;
 	env->env_var = NULL;
 	env->pid = getpid();
-	env->count = 0;
+	env->count = 1;
 	env->progname = progname;
 	return (env);
 }
