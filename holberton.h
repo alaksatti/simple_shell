@@ -3,10 +3,8 @@
 
 
 #include <unistd.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include <string.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/wait.h>
@@ -133,7 +131,7 @@ int unset_env(char **cmd, env_t *env);
 unsigned int sortlist(est_env **list, char *cmd, env_t *env);
 int deletenode(est_env **head, char *var, env_t *env);
 char **tokenize_env(char *line, env_t *env);
-char *tokenize_hash(char *line, env_t *env);
+char *tokenize_hash(char *line);
 void store_env(env_t *env);
 char **tokenize(char *line, env_t *env);
 void free_listint2(est_env **head);
@@ -145,4 +143,5 @@ int interactive_mode(env_t *env);
 int pathfinder(char **args, env_t *env);
 void init_program(char *av, env_t *env);
 int wait_exit(env_t *env, char *args);
+void processing(env_t *env, char **args);
 #endif

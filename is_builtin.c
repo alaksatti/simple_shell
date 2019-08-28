@@ -17,7 +17,6 @@ int is_builtin(char **cmd, env_t *env)
 		{"setenv", set_env},
 		{"unsetenv", unset_env},
 		{"exit", exit_shell},
-		{"", NULL},
 		{NULL, NULL},
 	};
 
@@ -30,7 +29,7 @@ int is_builtin(char **cmd, env_t *env)
 		}
 		++i;
 	}
-	if (i > 5)
+	if (i > 4)
 	{
 		env->status = -1;
 		return (-1);
