@@ -16,6 +16,7 @@ int exit_shell(char **cmd, env_t *env)
 	if (!stat)
 	{
 		env->in_shell = 0;
+		exit(EXIT_SUCCESS);
 		return (0);
 	}
 
@@ -38,13 +39,13 @@ int exit_shell(char **cmd, env_t *env)
 		if (exit_value > 2147483647)
 		{
 			env->status = 2;
-			return (0);
+			return (2);
 		}
 	}
 
-	env->status = 0;
+	env->status = exit_value;
 	env->in_shell = 0;
-	return (0);
+	return (env->status);
 }
 
 
