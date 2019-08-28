@@ -29,7 +29,7 @@ int main(int ac __attribute__((unused)), char *av[])
 		signal(SIGINT, sig_handle);
 **/
 		chars_read = getline(&line, &len, stdin);
-		if (chars_read == 1 || is_all_delims(line, " \n"))
+		if (is_all_delims(line, " \n"))
 			continue;
 		if (chars_read == -1)
 		{
