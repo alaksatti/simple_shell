@@ -22,13 +22,17 @@ int main(int ac __attribute__((unused)), char *av[])
 	interactive = is_interactive();
 	while (env.in_shell && chars_read != -1)
 	{
+		fail_check2 = 0;
 		if (interactive)
 			inter = interactive_mode(&env);
 		if (inter == -1)
 			return (1);
 		chars_read = getline(&line, &len, stdin);
 		if (chars_read == -1)
+		{
 			free_chars(line, &env);
+			return (0);
+		}
 		if (chars_read == 1)
 			continue;
 		afterhash = tokenize_hash(line, &env);
@@ -38,17 +42,21 @@ int main(int ac __attribute__((unused)), char *av[])
 		{
 			pid = fork();
 			if (pid == 0)
+			{
 				fail_check2 = pathfinder(args, &env);
+				if (fail_check2 == -1)
+					return (1);
+				return (0);
+			}
 			else
 			{
 				wait(&status);
+				if (WEXITSTATUS(status))
+				{
+					error_msg(&env, args[0]);
+					env.count++;
+				}
 				env.status = status;
-			}
-			if (fail_check2 == -1)
-			{
-				error_msg(&env, args[0]);
-				env.count++;
-				return (1);
 			}
 		}
 		free(args);
