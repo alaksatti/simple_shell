@@ -30,7 +30,7 @@ int is_builtin(char **cmd, env_t *env)
 		}
 		++i;
 	}
-	if (i > 4)
+	if (i > 5)
 	{
 		env->status = -1;
 		return (-1);

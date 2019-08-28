@@ -6,7 +6,7 @@
  * @command: command passed.
  * Return: nothing.
  */
-void error_msg(env_t *env, char *command)
+int error_msg(env_t *env, char *command)
 {
 	char buffer[1024];
 
@@ -18,4 +18,6 @@ void error_msg(env_t *env, char *command)
 	write(STDERR_FILENO, ": ", 2);
 	write(STDERR_FILENO, command, _strlen(command));
 	write(STDERR_FILENO, ": not found\n", _strlen(": not found\n"));
+
+	return (0);
 }
