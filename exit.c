@@ -16,7 +16,8 @@ int exit_shell(char **cmd, env_t *env)
 	if (!stat)
 	{
 		env->in_shell = 0;
-		return (0);
+		exit(EXIT_SUCCESS);
+		return (-1);
 	}
 
 	for (i = 0; stat[i]; i++)
@@ -28,7 +29,7 @@ int exit_shell(char **cmd, env_t *env)
 			env->status = 2;
 			error_msg(env, cmd[0]);
 			env->count++;
-			return (0);
+			return (-1);
 		}
 
 
