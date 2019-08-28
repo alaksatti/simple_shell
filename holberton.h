@@ -148,4 +148,5 @@ int wait_exit(env_t *env, char *args);
 void processing(env_t *env, char **args);
 int sig_handle(int signal);
 int sigs(void);
+bool is_all_delims(char *line, char *delims);
 #endif
