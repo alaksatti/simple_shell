@@ -146,4 +146,6 @@ int pathfinder(char **args, env_t *env);
 void init_program(char *av, env_t *env);
 int wait_exit(env_t *env, char *args);
 void processing(env_t *env, char **args);
+int sig_handle(int signal);
+int sigs(void);
 #endif

@@ -40,6 +40,11 @@ int main(int ac __attribute__((unused)), char *av[])
 		if (!afterhash)
 			exit(EXIT_SUCCESS);
 		args = tokenize(afterhash, &env);
+		printf("Hello\n");
+
+
+
+
 		fail_check = is_builtin(args, &env);
 		if (fail_check == -1)
 		{
