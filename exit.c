@@ -16,9 +16,9 @@ int exit_shell(char **cmd, env_t *env)
 	if (!stat)
 	{
 		env->in_shell = 0;
-		exit(EXIT_SUCCESS);
-		return (-1);
+		return (0);
 	}
+
 
 	for (i = 0; stat[i]; i++)
 	{
@@ -29,7 +29,7 @@ int exit_shell(char **cmd, env_t *env)
 			env->status = 2;
 			error_msg(env, cmd[0]);
 			env->count++;
-			return (-1);
+			return (2);
 		}
 
 
@@ -83,11 +83,9 @@ int echo_exit_status(char **cmd __attribute__((unused)), env_t *env)
 		_putchar('\n');
 	}
 
-	env->status = 0;
-
 	free(buffer);
 
-	return (0);
+	return (env->status);
 }
 /**
  * echo_parser - parses echo command.
