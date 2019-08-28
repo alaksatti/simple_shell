@@ -27,7 +27,7 @@ int main(int ac __attribute__((unused)), char *av[])
 		if (inter == -1)
 			return (1);
 		chars_read = getline(&line, &len, stdin);
-		if (chars_read == 1)
+		if (chars_read == 1 || is_all_delims(line, " \n"))
 			continue;
 		if (chars_read == -1)
 		{
