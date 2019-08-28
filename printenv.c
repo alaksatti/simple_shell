@@ -40,7 +40,7 @@ void store_env(env_t *env)
 
 	for (i = 0; var[i]; i++)
 	{
-		cmd = tokenize_env(var[i]);
+		cmd = tokenize_env(var[i], env);
 
 		addnode(&(env->env_var), cmd[0], cmd[1]);
 

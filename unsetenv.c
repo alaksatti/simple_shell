@@ -14,19 +14,20 @@ int unset_env(char **cmd, env_t *env)
 	var = cmd[1];
 
 	if (env && var && !cmd[2])
-		return (deletenode(&env->env_var, var));
-
+		return (deletenode(&env->env_var, var, env));
 
 	else if(!cmd[1])
 	{
-		write(STDERR_FILENO, "ARGUMENT ERROR\n", 15);
+		error_msg(env, cmd[0]);
+		env->count++;
 		env->status = -1;
 	}
 
 	else
         {
                 env->status = -1;
-                write(STDERR_FILENO, "Invalid Argument\n", 17);
+		error_msg(env, cmd[0]);
+		env->count++;
         }
 
 	return (0);
@@ -35,7 +36,7 @@ int unset_env(char **cmd, env_t *env)
 
 
 
-unsigned int sortlist(est_env **list, char *cmd)
+unsigned int sortlist(est_env **list, char *cmd, env_t *env)
 {
         unsigned int index = 0;
 
@@ -50,8 +51,9 @@ unsigned int sortlist(est_env **list, char *cmd)
 
         if (!next)
         {
-                write(STDERR_FILENO, "VARIABLE NOT PREV SET\n", 23);
-		return;
+	        error_msg(env, cmd);
+		env->count++;
+		env->status = -1;
         }
 
         return (index);
@@ -68,13 +70,12 @@ unsigned int sortlist(est_env **list, char *cmd)
  */
 
 
-int deletenode(est_env **head, char *var)
+int deletenode(est_env **head, char *var, env_t *env)
 {
 	unsigned int index, idx = 0;
 	est_env *nodescanner = *head, *prevnode = *head, *targetnode;
 
-	index = sortlist(head, var);
-
+	index = sortlist(head, var, env);
 
 	if (!*head)
                 return (0);

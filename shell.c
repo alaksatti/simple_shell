@@ -5,14 +5,13 @@ int main(int ac, char *av[])
 {
 	env_t env;
 	bool interactive;
-	char *line = NULL, **args, **pargs, **pargs2;
+	char *line = NULL, **args, *afterhash, **pargs, **pargs2;
 	size_t len = 0;
 	ssize_t chars_read = 0, chars_write;
 	pid_t pid;
 	int fail_check = 0, fail_check2 = 0, status;
 	char *command_path = NULL;
 
-	(void)ac;
 	init_env(&env, av[0]);
 	store_env(&env);
 	interactive = is_interactive();
@@ -32,7 +31,9 @@ int main(int ac, char *av[])
 			return (1);
 		}
 
-		args = tokenize(line);
+		afterhash = tokenize_hash(line, &env);
+
+		args = tokenize(afterhash, &env);
 
 
 
@@ -61,7 +62,7 @@ int main(int ac, char *av[])
 			}
 
 			if (fail_check2 == -1)
-			{		
+			{
 				error_msg(&env, args[0]);
 				env.count++;
 			}

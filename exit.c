@@ -2,19 +2,6 @@
 
 
 /**
- * exit-check - checks if the argument is asking to exit shell.
- * @cmd: command
- * @env: struct with env variables.
- * Return: nothing.
-
-int exit_check(char **cmd, env_t *env)
-{
-
-        if ((_strcmp(cmd[0], "exit") == 0))
-		exit_shell(cmd, env);
-}
-**/
-/**
  * exit_shell - exits the shell.
  * @cmd: command.
  * @env: struct with env varibales.
@@ -37,13 +24,17 @@ int exit_shell(char **cmd, env_t *env)
 		if (stat[i] < '0' || stat[i] > '9' || stat[i] == '-')
 		{
 			env->status = 2;
-			write(STDERR_FILENO, "Invalid Argument\n", 17);
+			error_msg(env, cmd[0]);
+			env->count++;
 			return (0);
 		}
 
 	exit_value = atoi(stat);
-	env->exit_sig = exit_value;
+
+	printf("%i\n", exit_value);
+	env->status = exit_value;
 	env->in_shell = 0;
+	exit(exit_value);
 	return (0);
 }
 
@@ -91,7 +82,7 @@ int echo_parser(char **cmd, env_t *env)
 	if (!cmd[1])
 	{
 		env->status = -1;
-		write(STDERR_FILENO, "Invalid Argument\n", 17);
+		error_msg(env, parser);
 		return (0);
 
 	}
@@ -105,7 +96,8 @@ int echo_parser(char **cmd, env_t *env)
 	else
 	{
 		env->status = -1;
-		write(STDERR_FILENO, "Invalid Argument\n", 17);
+		error_msg(env, cmd[0]);
+		env->count++;
 		return (0);
 	}
 
@@ -142,7 +134,8 @@ int echo_pid(char **cmd, env_t *env)
 	else
 	{
 		env->status = -1;
-		write(STDERR_FILENO, "ERROR\n", 6);
+		error_msg(env, cmd[0]);
+		env->count++;
 	}
 
         free(buffer);

@@ -45,7 +45,8 @@ int set_env(char **cmd, env_t *env)
 	else
 	{
 		env->status = -1;
-		write(STDERR_FILENO, "Invalid Argument\n", 17);
+		error_msg(env, cmd[0]);
+		env->count++;
 	}
 
 /**

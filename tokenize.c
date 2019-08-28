@@ -1,13 +1,13 @@
 #include "holberton.h"
 
-char **tokenize(char *line)
+char **tokenize(char *line, env_t *env)
 {
         char *cmd, **tmp;
         int i;
 
         tmp = malloc(sizeof(*tmp) * 1024);
         if (!tmp)
-                exit(1);
+                env->status = -1;
         cmd = strtok(line, " \t\n");
         for (i = 0; cmd; i++)
         {
@@ -40,40 +40,31 @@ char **tokenize_semi(char *line)
 
         return (tmp);
 }
+**/
 
-/**
-
-
-char **tokenize_hash(char *line)
+char *tokenize_hash(char *line, env_t *env)
 {
-        char *cmd, **tmp;
+        char *cmd, *tmp;
         int i;
 
         tmp = malloc(sizeof(*tmp) * 1024);
         if (!tmp)
-                exit(1);
-        cmd = strtok(line, " \t\n");
-        for (i = 0; cmd; i++)
-        {
-                tmp[i] = cmd;
-                cmd = strtok(NULL, " \t\n");
-        }
+                env->status = -1;
+        cmd = strtok(line, "#");
+	tmp = cmd;
+
         return (tmp);
 }
 
 
-**/
-
-
-
-char **tokenize_env(char *line)
+char **tokenize_env(char *line, env_t *env)
 {
 	char *cmd, **tmp;
         int i;
 
 	tmp = malloc(sizeof(*tmp) * 1024);
         if (!tmp)
-                exit(1);
+                env->status = -1;
 
         cmd = strtok(line, "=");
         for (i = 0; cmd; i++)
