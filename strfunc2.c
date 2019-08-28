@@ -8,7 +8,7 @@
  * @env: struct of shell var.
  * Return: pointer to string.
  */
-char *itoa(int num, char *s, env_t *env)
+char *_itoa(int num, char *s, env_t *env)
 {
 	int i = 0, neg = 0, r, n = num;
 
