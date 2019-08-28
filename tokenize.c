@@ -14,6 +14,7 @@ char **tokenize(char *line)
                 tmp[i] = cmd;
                 cmd = strtok(NULL, " \t\n");
         }
+	tmp[i] = NULL;
         return (tmp);
 }
 
