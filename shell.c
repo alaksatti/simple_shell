@@ -28,7 +28,7 @@ int main(int ac __attribute__((unused)), char *av[])
 			return (1);
 		chars_read = getline(&line, &len, stdin);
 		if (chars_read == 1)
-                        continue;
+			continue;
 		if (chars_read == -1)
 		{
 			free_chars(line, &env);
