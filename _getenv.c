@@ -9,7 +9,6 @@
 char *_getenv(char *name, env_t *env)
 {
 	est_env *env_var = env->env_var;
-	int i;
 
 	while (env_var)
 	{
@@ -18,17 +17,4 @@ char *_getenv(char *name, env_t *env)
 		env_var = env_var->next;
 	}
 	return (NULL);
-}
-
-
-void printt_environ(void)
-{
-	int i;
-	extern char **environ;
-
-
-
-	for (i = 0; environ[i]; i++)
-		printf("After strok in separate function: %s\n", environ[i]);
-
 }

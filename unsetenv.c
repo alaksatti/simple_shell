@@ -4,19 +4,19 @@
  * unset_env - unsets an env varable.
  * @cmd: command.
  * @env: struc of env variables.
+ * Return: 0 on success.
  */
 
 int unset_env(char **cmd, env_t *env)
 {
-	est_env *nodescanner = env->env_var;
-	char *var, *node;
+	char *var;
 
 	var = cmd[1];
 
 	if (env && var && !cmd[2])
 		return (deletenode(&env->env_var, var, env));
 
-	else if(!cmd[1])
+	else if (!cmd[1])
 	{
 		error_msg(env, cmd[0]);
 		env->count++;
@@ -24,39 +24,45 @@ int unset_env(char **cmd, env_t *env)
 	}
 
 	else
-        {
-                env->status = -1;
+	{
+		env->status = -1;
 		error_msg(env, cmd[0]);
 		env->count++;
-        }
+	}
 
 	return (0);
 
 }
-
+/**
+ * sortlist - srots through a linked list.
+ * @list: double pointer to head of list.
+ * @cmd: command.
+ * @env: struct of shell vars.
+ *Return: index of env var.
+ */
 
 
 unsigned int sortlist(est_env **list, char *cmd, env_t *env)
 {
-        unsigned int index = 0;
+	unsigned int index = 0;
 
-        est_env *currentnode = *list, *next = *list;
+	est_env *currentnode = *list, *next = *list;
 
-        while (next && _strcmp(cmd, currentnode->envar))
-        {
-                currentnode = next;
-                next = next->next;
-                index++;
-        }
+	while (next && _strcmp(cmd, currentnode->envar))
+	{
+		currentnode = next;
+		next = next->next;
+		index++;
+	}
 
-        if (!next)
-        {
-	        error_msg(env, cmd);
+	if (!next && _strcmp(cmd, currentnode->envar))
+	{
+		error_msg(env, cmd);
 		env->count++;
 		env->status = -1;
-        }
+	}
 
-        return (index);
+	return (index);
 }
 
 
@@ -65,7 +71,7 @@ unsigned int sortlist(est_env **list, char *cmd, env_t *env)
  * deletenode - adds node at end of linked list.
  * @head: env variables linked list.
  * @var: variable to be set.
- * @value:  value of variable.
+ * @env: struct carrying shell var.
  * Return: nothing.
  */
 
@@ -78,36 +84,36 @@ int deletenode(est_env **head, char *var, env_t *env)
 	index = sortlist(head, var, env);
 
 	if (!*head)
-                return (0);
+		return (0);
 
-        if (index == 0)
-        {
+	if (index == 0)
+	{
 
-                *head = nodescanner->next;
-                free(nodescanner);
-                return (1);
-        }
-        while (nodescanner)
+		*head = nodescanner->next;
+		free(nodescanner);
+		return (1);
+	}
+	while (nodescanner)
 	{
 		if ((idx + 1) == index)
 			break;
 
-                idx++;
+		idx++;
 		prevnode = nodescanner;
-                nodescanner = nodescanner->next;
+		nodescanner = nodescanner->next;
 
-        }
+	}
 
 
-        if ((idx + 1) == index)
-        {
+	if ((idx + 1) == index)
+	{
 
-                targetnode = nodescanner;
-                prevnode->next = targetnode->next;
-                free(targetnode);
+		targetnode = nodescanner;
+		prevnode->next = targetnode->next;
+		free(targetnode);
 
-                return (1);
-        }
+		return (1);
+	}
 
 	return (0);
 }

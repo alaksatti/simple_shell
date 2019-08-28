@@ -1,73 +1,52 @@
 #include "holberton.h"
 #include <stdio.h>
 
-int main(int ac, char *av[])
+
+/**
+ * main - main file for shell.
+ * @ac: number of arguments.
+ * @av: argument strings.
+ * Return: 0 on success.
+ */
+int main(int ac __attribute__((unused)), char *av[])
 {
 	env_t env;
 	bool interactive;
-	char *line = NULL, **args, *afterhash, **pargs, **pargs2;
-	size_t len = 0;
-	ssize_t chars_read = 0, chars_write;
+	char *line = NULL, **args, *afterhash;
+	ssize_t chars_read = 0, inter;
+	size_t len;
 	pid_t pid;
 	int fail_check = 0, fail_check2 = 0, status;
-	char *command_path = NULL;
 
-	init_env(&env, av[0]);
-	store_env(&env);
+	init_program(av[0], &env);
 	interactive = is_interactive();
 	while (env.in_shell && chars_read != -1)
 	{
 		if (interactive)
-		{
-			chars_write = write(STDOUT_FILENO, "$ ", 2);
-			env.in_shell = 1;
-			if (chars_write == -1)
-				return (1);
-		}
+			inter = interactive_mode(&env);
+		if (inter == -1)
+			return (1);
 		chars_read = getline(&line, &len, stdin);
 		if (chars_read == -1)
-		{
-			free(line);
-			free_env_list(&(env.env_var));
-			return (1);
-		}
-
+			free_chars(line, &env);
 		afterhash = tokenize_hash(line, &env);
-
 		args = tokenize(afterhash, &env);
-
-
-
 		fail_check = is_builtin(args, &env);
-
 		if (fail_check == -1)
 		{
 			pid = fork();
-
 			if (pid == 0)
-			{
-				command_path = search_path(args[0], &env);
-				if (command_path != NULL)
-					args[0] = command_path;
-				fail_check2 = execve(_strdup(args[0]), args, NULL);
-				if (command_path)
-				{
-					free(command_path);
-					command_path = NULL;
-				}
-			}
+				fail_check2 = pathfinder(args, &env);
 			else
 			{
 				wait(&status);
 				env.status = status;
 			}
-
 			if (fail_check2 == -1)
 			{
 				error_msg(&env, args[0]);
 				env.count++;
-			}
-		}
+			}}
 		free(args);
 	}
 	return (0);

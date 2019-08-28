@@ -1,7 +1,12 @@
 #include "holberton.h"
 
-
-int print_env(char **cmd, env_t *env)
+/**
+ * print_env - prints env variables.
+ * @cmd: command.
+ * @env: struct of shell variables.
+ * Return: 0 on sucess.
+ */
+int print_env(char **cmd __attribute__((unused)), env_t *env)
 {
 
 	est_env *nodescanner = env->env_var;
@@ -29,13 +34,15 @@ int print_env(char **cmd, env_t *env)
 	return (0);
 }
 
-
+/**
+ * store_env - stores env var in linked list.
+ * @env: struct of shell vars.
+ * Return: nothing.
+ */
 void store_env(env_t *env)
 {
-	extern char **environ;
 	int i;
 	char **cmd, **var = environ;
-
 
 
 	for (i = 0; var[i]; i++)

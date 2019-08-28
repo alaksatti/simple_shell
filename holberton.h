@@ -17,7 +17,7 @@ extern char **environ;
 
 /**
  * struct est_env - singly linked list.
- * @env: env var to be evaluated.
+ * @envar: env var to be evaluated.
  * @value: value of env var.
  * @next:next node in the list.
  *
@@ -31,7 +31,7 @@ typedef struct est_env
 	struct est_env *next;
 
 
-}est_env;
+} est_env;
 /**
  * struct hist_t - singly linked list
  * @cmd: string - (malloc string)
@@ -44,14 +44,22 @@ typedef struct est_env
 typedef struct hist_t
 {
 
-        char *cmd;
-        struct hist_t *next;
+	char *cmd;
+	struct hist_t *next;
 } hist_t;
 
 
 /**
  * struct env_t - structure of specific shell environment variables.
- * @exit_sig - holds the exit signal.
+ * @exit_sig: holds the exit signal.
+ * @in_shell: in shell or not.
+ * @status: status of last command.
+ * @env_var: linked list of env var.
+ * @pid: process id.
+ * @count: number of errors.
+ * @progname: program name.
+ * @history: linked list of commands entered.
+ *Description: shell variable.s
  */
 
 typedef struct env_t
@@ -64,7 +72,7 @@ typedef struct env_t
 	hist_t history;
 	int count;
 	char *progname;
-}env_t;
+} env_t;
 
 
 /**
@@ -77,15 +85,15 @@ typedef struct env_t
 
 typedef struct b_t
 {
-        char *cmd;
-        int(*func)(char **, env_t *);
-}b_t;
+	char *cmd;
+	int (*func)(char **, env_t *);
+} b_t;
 
 
 /**
  * struct help_list - struct for help files of specific commands.
  * @cmd: command.
- * @file: help file for command.
+ * @helpfile: help file for command.
  *
  * Description: commands and their corresponding help files.
  */
@@ -94,7 +102,7 @@ typedef struct help_list
 {
 	char *cmd;
 	char *helpfile;
-}help_list;
+} help_list;
 
 char *_strdup(char *string);
 int _strlen(char *s);
@@ -131,8 +139,10 @@ char **tokenize(char *line, env_t *env);
 void free_listint2(est_env **head);
 char *_strdup(char *str);
 void error_msg(env_t *env, char *command);
-/**
-char **parseOR(char **tmp);
-char **parseAND(char **tmp);
-**/
+void rearrange(est_env **head, est_env *node);
+int free_chars(char *line, env_t *env);
+int interactive_mode(env_t *env);
+int pathfinder(char **args, env_t *env);
+void init_program(char *av, env_t *env);
+
 #endif

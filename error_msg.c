@@ -1,5 +1,11 @@
 #include "holberton.h"
 
+/**
+ * error_msg - prints error message to STDERR_FILENO.
+ * @env: struct fo shell variables.
+ * @command: command passed.
+ * Return: nothing.
+ */
 void error_msg(env_t *env, char *command)
 {
 	char buffer[1024];
