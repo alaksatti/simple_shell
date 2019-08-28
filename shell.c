@@ -1,7 +1,6 @@
 #include "holberton.h"
 #include <stdio.h>
 
-
 /**
  * main - main file for shell.
  * @ac: number of arguments.
@@ -26,15 +25,20 @@ int main(int ac __attribute__((unused)), char *av[])
 			inter = interactive_mode(&env);
 		if (inter == -1)
 			return (1);
+/**
+		signal(SIGINT, sig_handle);
+**/
 		chars_read = getline(&line, &len, stdin);
 		if (chars_read == 1 || is_all_delims(line, " \n"))
 			continue;
 		if (chars_read == -1)
 		{
 			free_chars(line, &env);
-			return (0);
+			exit(EXIT_FAILURE);
 		}
 		afterhash = tokenize_hash(line);
+		if (!afterhash)
+			exit(EXIT_SUCCESS);
 		args = tokenize(afterhash, &env);
 		fail_check = is_builtin(args, &env);
 		if (fail_check == -1)
@@ -49,5 +53,5 @@ int main(int ac __attribute__((unused)), char *av[])
 
 		free(args);
 	}
-	return (0);
+	return (env.status);
 }
