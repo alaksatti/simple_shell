@@ -16,7 +16,7 @@ int main(int ac __attribute__((unused)), char *av[])
 	ssize_t chars_read = 0, inter;
 	size_t len;
 	pid_t pid;
-	int fail_check = 0, fail_check2 = 0, status;
+	int fail_check = 0;
 
 	init_program(av[0], &env);
 	interactive = is_interactive();
@@ -27,13 +27,13 @@ int main(int ac __attribute__((unused)), char *av[])
 		if (inter == -1)
 			return (1);
 		chars_read = getline(&line, &len, stdin);
+		if (chars_read == 1)
+			continue;
 		if (chars_read == -1)
 		{
 			free_chars(line, &env);
 			return (0);
 		}
-		if (chars_read == 1)
-			continue;
 		afterhash = tokenize_hash(line);
 		args = tokenize(afterhash, &env);
 		fail_check = is_builtin(args, &env);
@@ -41,23 +41,12 @@ int main(int ac __attribute__((unused)), char *av[])
 		{
 			pid = fork();
 			if (pid == 0)
-			{
-				fail_check2 = pathfinder(args, &env);
-				if (fail_check2 == -1)
-					return (1);
-				return (0);
-			}
+				processing(&env, args);
+
 			else
-			{
-				wait(&status);
-				if (WEXITSTATUS(status))
-				{
-					error_msg(&env, args[0]);
-					env.count++;
-				}
-				env.status = status;
-			}
+				wait_exit(&env, args[0]);
 		}
+
 		free(args);
 	}
 	return (0);

@@ -3,10 +3,8 @@
 
 
 #include <unistd.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include <string.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/wait.h>
@@ -138,11 +136,12 @@ void store_env(env_t *env);
 char **tokenize(char *line, env_t *env);
 void free_listint2(est_env **head);
 char *_strdup(char *str);
-void error_msg(env_t *env, char *command);
+int error_msg(env_t *env, char *command);
 void rearrange(est_env **head, est_env *node);
 int free_chars(char *line, env_t *env);
 int interactive_mode(env_t *env);
 int pathfinder(char **args, env_t *env);
 void init_program(char *av, env_t *env);
-
+int wait_exit(env_t *env, char *args);
+void processing(env_t *env, char **args);
 #endif

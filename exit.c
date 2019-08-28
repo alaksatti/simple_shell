@@ -43,7 +43,6 @@ int exit_shell(char **cmd, env_t *env)
 
 	env->status = 0;
 	env->in_shell = 0;
-	exit(exit_value);
 	return (0);
 }
 

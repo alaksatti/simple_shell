@@ -17,7 +17,6 @@ int is_builtin(char **cmd, env_t *env)
 		{"setenv", set_env},
 		{"unsetenv", unset_env},
 		{"exit", exit_shell},
-		{"", NULL},
 		{NULL, NULL},
 	};
 
