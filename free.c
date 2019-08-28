@@ -1,10 +1,11 @@
 #include "holberton.h"
 
-
-void free_listint2(est_env **head)
+/**
+ * free_env_list - frees a linked list of env variables
+ */
+void free_env_list(est_env **head)
 {
         est_env *thisnode;
-
 
         if (!head || !*head)
                 return;
@@ -19,3 +20,4 @@ void free_listint2(est_env **head)
         }
         *head = NULL;
 }
+

@@ -28,6 +28,7 @@ int main(int ac, char *av[])
 		if (chars_read == -1)
 		{
 			free(line);
+			free_env_list(&(env.env_var));
 			return (1);
 		}
 
@@ -67,8 +68,7 @@ int main(int ac, char *av[])
 				env.count++;
 			}
 		}
-
+		free(args);
 	}
-
 	return (0);
 }
