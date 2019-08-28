@@ -29,6 +29,8 @@ int main(int ac __attribute__((unused)), char *av[])
 		chars_read = getline(&line, &len, stdin);
 		if (chars_read == -1)
 			free_chars(line, &env);
+		if (chars_read == 1)
+			continue;
 		afterhash = tokenize_hash(line, &env);
 		args = tokenize(afterhash, &env);
 		fail_check = is_builtin(args, &env);
@@ -46,7 +48,9 @@ int main(int ac __attribute__((unused)), char *av[])
 			{
 				error_msg(&env, args[0]);
 				env.count++;
-			}}
+				return (1);
+			}
+		}
 		free(args);
 	}
 	return (0);
