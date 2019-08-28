@@ -30,17 +30,12 @@ char **tokenize(char *line, env_t *env)
  * @env: struct of shell var.
  * Return: pointer to tokenized string.
  */
-char *tokenize_hash(char *line, env_t *env)
+char *tokenize_hash(char *line)
 {
-	char *cmd, *tmp;
+	char *cmd;
 
-	tmp = malloc(sizeof(*tmp) * 1024);
-	if (!tmp)
-		env->status = -1;
 	cmd = strtok(line, "#");
-	tmp = cmd;
-
-	return (tmp);
+	return (cmd);
 }
 
 /**

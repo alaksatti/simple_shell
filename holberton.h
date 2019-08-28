@@ -133,7 +133,7 @@ int unset_env(char **cmd, env_t *env);
 unsigned int sortlist(est_env **list, char *cmd, env_t *env);
 int deletenode(est_env **head, char *var, env_t *env);
 char **tokenize_env(char *line, env_t *env);
-char *tokenize_hash(char *line, env_t *env);
+char *tokenize_hash(char *line);
 void store_env(env_t *env);
 char **tokenize(char *line, env_t *env);
 void free_listint2(est_env **head);

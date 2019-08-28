@@ -22,7 +22,6 @@ int main(int ac __attribute__((unused)), char *av[])
 	interactive = is_interactive();
 	while (env.in_shell && chars_read != -1)
 	{
-		fail_check2 = 0;
 		if (interactive)
 			inter = interactive_mode(&env);
 		if (inter == -1)
@@ -35,7 +34,7 @@ int main(int ac __attribute__((unused)), char *av[])
 		}
 		if (chars_read == 1)
 			continue;
-		afterhash = tokenize_hash(line, &env);
+		afterhash = tokenize_hash(line);
 		args = tokenize(afterhash, &env);
 		fail_check = is_builtin(args, &env);
 		if (fail_check == -1)
