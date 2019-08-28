@@ -34,7 +34,7 @@ int main(int ac __attribute__((unused)), char *av[])
 		if (chars_read == -1)
 		{
 			free_chars(line, &env);
-			exit(EXIT_FAILURE);
+			exit(env.status);
 		}
 		afterhash = tokenize_hash(line);
 		if (!afterhash)
