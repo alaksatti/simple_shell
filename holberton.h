@@ -9,7 +9,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/wait.h>
-
+#include <stdio.h>
 
 extern char **environ;
 
@@ -111,8 +111,8 @@ char *search_path(char *command, env_t *env);
 int _putchar(char c);
 int print_env(char **environ, env_t *env);
 void exit_check(char **cmd, env_t *env);
-int exit_shell(char **cmd, env_t *env);
-int is_builtin(char **cmd, env_t *env);
+int exit_shell(char **cmd, env_t *env, char *line);
+int is_builtin(char **cmd, env_t *env, char *line);
 int wordcount(char *s, char *d);
 char *eachword(char *s);
 char **_strtok(char *str, char *d);
@@ -145,7 +145,5 @@ int pathfinder(char **args, env_t *env);
 void init_program(char *av, env_t *env);
 int wait_exit(env_t *env, char *args);
 void processing(env_t *env, char **args);
-int sig_handle(int signal);
-int sigs(void);
 bool is_all_delims(char *line, char *delims);
 #endif

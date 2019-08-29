@@ -1,5 +1,5 @@
 #include "holberton.h"
-#include <stdio.h>
+
 
 /**
  * main - main file for shell.
@@ -25,9 +25,7 @@ int main(int ac __attribute__((unused)), char *av[])
 			inter = interactive_mode(&env);
 		if (inter == -1)
 			return (1);
-/**
-		signal(SIGINT, sig_handle);
-**/
+
 		chars_read = getline(&line, &len, stdin);
 		if (chars_read == -1)
 		{
