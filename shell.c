@@ -55,5 +55,5 @@ int main(int ac __attribute__((unused)), char *av[])
 
 		free(args);
 	}
-	return (env.status);
+	exit(env.status);
 }

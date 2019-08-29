@@ -15,7 +15,7 @@ int exit_shell(char **cmd, env_t *env)
 
 	if (!stat)
 	{
-		exit(env->status);
+		env->in_shell = 0;
 
 	}
 
