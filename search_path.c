@@ -13,6 +13,8 @@ char *search_path(char *command, env_t *env)
 	int i, j;
 	struct stat st;
 
+	if (value == NULL)
+		return (NULL);
 	dir = strtok(value, ":\n");
 	while (dir != NULL)
 	{
