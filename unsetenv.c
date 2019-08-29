@@ -14,23 +14,25 @@ int unset_env(char **cmd, env_t *env)
 	var = cmd[1];
 
 	if (env && var && !cmd[2])
+	{
 		return (deletenode(&env->env_var, var, env));
+	}
 
 	else if (!cmd[1])
 	{
 		error_msg(env, cmd[0]);
 		env->count++;
-		env->status = -1;
+		env->status = 2;
 	}
 
 	else
 	{
-		env->status = -1;
+		env->status = 2;
 		error_msg(env, cmd[0]);
 		env->count++;
 	}
 
-	return (0);
+	return (env->status);
 
 }
 /**
@@ -59,7 +61,7 @@ unsigned int sortlist(est_env **list, char *cmd, env_t *env)
 	{
 		error_msg(env, cmd);
 		env->count++;
-		env->status = -1;
+		env->status = 2;
 	}
 
 	return (index);
@@ -91,7 +93,7 @@ int deletenode(est_env **head, char *var, env_t *env)
 
 		*head = nodescanner->next;
 		free(nodescanner);
-		return (1);
+		return (env->status = 2);
 	}
 	while (nodescanner)
 	{
@@ -111,9 +113,10 @@ int deletenode(est_env **head, char *var, env_t *env)
 		targetnode = nodescanner;
 		prevnode->next = targetnode->next;
 		free(targetnode);
+		env->status = 0;
 
-		return (1);
+		return (env->status);
 	}
 
-	return (0);
+	return (env->status);
 }
