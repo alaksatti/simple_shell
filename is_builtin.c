@@ -6,7 +6,7 @@
  * @env: struct of shell vars.
  * Return: 0 if found, -1 if not.
  */
-int is_builtin(char **cmd, env_t *env)
+int is_builtin(char **cmd, env_t *env, char *line)
 {
 	int i = 0;
 
@@ -16,23 +16,24 @@ int is_builtin(char **cmd, env_t *env)
 		{"echo", echo_parser},
 		{"setenv", set_env},
 		{"unsetenv", unset_env},
-		{"exit", exit_shell},
+		{"exit", echo_parser},
 		{NULL, NULL},
 	};
 
 
 	while (built_in_list[i].cmd)
 	{
-		if (!_strcmp(built_in_list[i].cmd, cmd[0]))
-		{
+		if (!_strcmp(built_in_list[i].cmd, cmd[0]) && i != 4)
 			return (built_in_list[i].func(cmd, env));
-		}
+
+		if (!_strcmp(built_in_list[i].cmd, cmd[0]))
+			return (exit_shell(cmd, env, line));
 		++i;
 	}
 	if (i > 4)
 	{
 		env->status = -1;
-		return (-1);
+		return (env->status);
 	}
 	return (0);
 }
