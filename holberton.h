@@ -143,7 +143,7 @@ int free_chars(char *line, env_t *env);
 int interactive_mode(env_t *env);
 int pathfinder(char **args, env_t *env);
 void init_program(char *av, env_t *env);
-int wait_exit(env_t *env, char *args);
+int wait_exit(env_t *env);
 void processing(env_t *env, char **args);
 bool is_all_delims(char *line, char *delims);
 #endif

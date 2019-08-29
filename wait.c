@@ -6,17 +6,13 @@
  * @args: argument.
  * Return: 0 on sucess.
  */
-int wait_exit(env_t *env, char *args)
+int wait_exit(env_t *env)
 {
 	int status;
 
-	(void)args;
 	wait(&status);
-/*	if (WEXITSTATUS(status))
-	{
-		error_msg(env, args);
+	if (WEXITSTATUS(status) == 127)
 		env->count++;
-	}
-*/	env->status = WEXITSTATUS(status);
+	env->status = WEXITSTATUS(status);
 	return (env->status);
 }
