@@ -10,7 +10,6 @@
 #include <sys/stat.h>
 #include <sys/wait.h>
 #include <stdio.h>
-
 extern char **environ;
 
 
@@ -146,4 +145,5 @@ void init_program(char *av, env_t *env);
 int wait_exit(env_t *env);
 void processing(env_t *env, char **args);
 bool is_all_delims(char *line, char *delims);
+void handle_signal(int signal);
 #endif
