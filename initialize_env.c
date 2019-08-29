@@ -16,6 +16,10 @@ env_t *init_env(env_t *env, char *progname)
 	env->pid = getpid();
 	env->count = 1;
 	env->progname = progname;
+
+
+	signal(SIGINT, handle_signal);
+
 	return (env);
 }
 

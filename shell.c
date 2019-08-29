@@ -50,7 +50,7 @@ int main(int ac __attribute__((unused)), char *av[])
 				processing(&env, args);
 
 			else
-				env.status = wait_exit(&env, args[0]);
+				env.status = wait_exit(&env);
 		}
 
 		free(args);
