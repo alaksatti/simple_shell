@@ -40,7 +40,7 @@ int set_env(char **cmd, env_t *env)
 	}
 	else
 	{
-		env->status = -1;
+		env->status = 2;
 		error_msg(env, cmd[0]);
 		env->count++;
 	}

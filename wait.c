@@ -12,12 +12,14 @@ int wait_exit(env_t *env, char *args)
 	int status;
 
 	wait(&status);
-	if (WEXITSTATUS(status))
+	if (WIFEXITED(status))
 	{
 		error_msg(env, args);
 		env->count++;
+		env->status = WEXITSTATUS(status);
 	}
-	env->status = status;
 
-	return (0);
+
+
+	return (env->status);
 }

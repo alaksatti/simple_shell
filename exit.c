@@ -1,5 +1,5 @@
 #include "holberton.h"
-
+#include <stdio.h>
 
 /**
  * exit_shell - exits the shell.
@@ -16,8 +16,7 @@ int exit_shell(char **cmd, env_t *env)
 	if (!stat)
 	{
 		env->in_shell = 0;
-		exit(EXIT_SUCCESS);
-		return (0);
+
 	}
 
 
@@ -36,7 +35,7 @@ int exit_shell(char **cmd, env_t *env)
 
 
 		exit_value = (exit_value * 10) + stat[i] - '0';
-		if (exit_value > 2147483647)
+		if (exit_value > 23456789)
 		{
 			env->status = 2;
 			return (2);
@@ -44,7 +43,7 @@ int exit_shell(char **cmd, env_t *env)
 	}
 
 	env->status = exit_value;
-	env->in_shell = 0;
+	exit(env->status);
 	return (env->status);
 }
 
