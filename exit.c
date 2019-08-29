@@ -8,15 +8,17 @@
  * Return: Nothing:
  */
 
-int exit_shell(char **cmd, env_t *env)
+int exit_shell(char **cmd, env_t *env, char *line)
 {
 	unsigned long i, exit_value = 0;
 	char *stat = cmd[1];
 
 	if (!stat)
 	{
-		env->in_shell = 0;
-
+		free_chars(line, env);
+		free(cmd);
+		exit(env->status);
+		return (env->status);
 	}
 
 

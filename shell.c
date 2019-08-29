@@ -40,9 +40,11 @@ int main(int ac __attribute__((unused)), char *av[])
 			continue;
 		afterhash = tokenize_hash(line);
 		if (!afterhash)
+		{	free_chars(line, &env);
 			exit(EXIT_SUCCESS);
+		}
 		args = tokenize(afterhash, &env);
-		fail_check = is_builtin(args, &env);
+		fail_check = is_builtin(args, &env, line);
 		if (fail_check == -1)
 		{
 			pid = fork();
