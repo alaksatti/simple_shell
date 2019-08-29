@@ -13,7 +13,11 @@ char *_getenv(char *name, env_t *env)
 	while (env_var)
 	{
 		if (_strcmp(name, env_var->envar) == 0)
+		{
+			if (env_var->value == NULL)
+				return (NULL);
 			return (_strdup(env_var->value));
+		}
 		env_var = env_var->next;
 	}
 	return (NULL);
