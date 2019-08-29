@@ -22,12 +22,13 @@ int unset_env(char **cmd, env_t *env)
 	{
 		error_msg(env, cmd[0]);
 		env->count++;
-		env->status = 2;
+		env->status = 0;
+		return (env->status);
 	}
 
 	else
 	{
-		env->status = 2;
+		env->status = 0;
 		error_msg(env, cmd[0]);
 		env->count++;
 	}
@@ -93,7 +94,7 @@ int deletenode(est_env **head, char *var, env_t *env)
 
 		*head = nodescanner->next;
 		free(nodescanner);
-		return (env->status = 2);
+		return (env->status = 0);
 	}
 	while (nodescanner)
 	{

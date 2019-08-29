@@ -16,7 +16,16 @@ int set_env(char **cmd, env_t *env)
 	var = cmd[1];
 	value = cmd[2];
 
-	if (var && value && !cmd[3])
+	if (!value && var)
+	{
+		env->status = 2;
+                error_msg(env, cmd[0]);
+                env->count++;
+		return (env->status);
+	}
+
+
+	else if (var && value && !cmd[3])
 	{
 		if (!nodescanner)
 		{
@@ -40,11 +49,11 @@ int set_env(char **cmd, env_t *env)
 	}
 	else
 	{
-		env->status = 2;
+		env->status = 0;
 		error_msg(env, cmd[0]);
 		env->count++;
 	}
-	return (0);
+	return (env->status);
 }
 
 /**
