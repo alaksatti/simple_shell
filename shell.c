@@ -25,15 +25,9 @@ int main(int ac __attribute__((unused)), char *av[])
 			inter = interactive_mode(&env);
 		if (inter == -1)
 			return (1);
-
 		chars_read = getline(&line, &len, stdin);
 		if (chars_read == -1)
-		{
-			if (interactive)
-				_putchar('\n');
-			free_chars(line, &env);
-			exit(env.status);
-		}
+			handle_eof(interactive, line, &env);
 		if (is_all_delims(line, " \n"))
 			continue;
 		afterhash = tokenize_hash(line);
@@ -48,11 +42,9 @@ int main(int ac __attribute__((unused)), char *av[])
 			pid = fork();
 			if (pid == 0)
 				processing(&env, args);
-
 			else
 				env.status = wait_exit(&env);
 		}
-
 		free(args);
 	}
 	exit(env.status);
