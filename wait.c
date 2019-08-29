@@ -10,12 +10,13 @@ int wait_exit(env_t *env, char *args)
 {
 	int status;
 
+	(void)args;
 	wait(&status);
-	if (WEXITSTATUS(status))
+/*	if (WEXITSTATUS(status))
 	{
 		error_msg(env, args);
 		env->count++;
 	}
-	env->status = WEXITSTATUS(status);
+*/	env->status = WEXITSTATUS(status);
 	return (env->status);
 }
