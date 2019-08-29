@@ -2,6 +2,20 @@
 #include <stdio.h>
 
 /**
+* sig_handle -  voids signal and prints new line.
+* @signal: signle to be handled.
+* Return: 0 on success.
+*/
+
+int sig_handle(int signal)
+{
+
+        (void)signal;
+        write(STDOUT_FILENO, "\n$ ", 3);
+        return (0);
+}
+
+/**
  * main - main file for shell.
  * @ac: number of arguments.
  * @av: argument strings.
@@ -25,9 +39,9 @@ int main(int ac __attribute__((unused)), char *av[])
 			inter = interactive_mode(&env);
 		if (inter == -1)
 			return (1);
-/**
+
 		signal(SIGINT, sig_handle);
-**/
+
 		chars_read = getline(&line, &len, stdin);
 		if (chars_read == -1)
 		{
