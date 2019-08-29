@@ -31,7 +31,8 @@ int main(int ac __attribute__((unused)), char *av[])
 		chars_read = getline(&line, &len, stdin);
 		if (chars_read == -1)
 		{
-			_putchar('\n');
+			if (interactive)
+				_putchar('\n');
 			free_chars(line, &env);
 			exit(env.status);
 		}
