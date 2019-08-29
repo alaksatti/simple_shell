@@ -1,25 +1,18 @@
 #include "holberton.h"
 
-
 /**
  * wait_exit - wait and exit.
  * @env: struct of shell vars
  * @args: argument.
  * Return: 0 on sucess.
  */
-int wait_exit(env_t *env, char *args)
+int wait_exit(env_t *env)
 {
 	int status;
 
 	wait(&status);
-	if (WIFEXITED(status))
-	{
-		error_msg(env, args);
+	if (WEXITSTATUS(status) == 127)
 		env->count++;
-		env->status = WEXITSTATUS(status);
-	}
-
-
-
+	env->status = WEXITSTATUS(status);
 	return (env->status);
 }
