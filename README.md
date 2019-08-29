@@ -4,7 +4,7 @@ Simple Shell is a simplified UNIX command interpreter maded to mimic dash.
 
 ## Requirements
 
-* Allowed ed:itors: vi, vim, emacs
+* Allowed editors: vi, vim, emacs
 * All files are compiled on Ubuntu 14.04 LTS
 * Programs and functions are compiled with gcc 4.8.4 using the flags -Wall -Werror -Wextra and -pedantic
 * All files should end with a new line
