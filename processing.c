@@ -13,6 +13,5 @@ void processing(env_t *env, char **args)
 
 	fail_check2 = pathfinder(args, env);
 	if (fail_check2 == -1)
-		exit(1);
-	exit(0);
+		exit(127);
 }
