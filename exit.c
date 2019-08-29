@@ -29,7 +29,7 @@ int exit_shell(char **cmd, env_t *env, char *line)
 		if (stat[i] < '0' || stat[i] > '9' || stat[i] == '-')
 		{
 			env->status = 2;
-			error_msg(env, cmd[0]);
+			error_msg2(env, cmd);
 			env->count++;
 			return (2);
 		}
@@ -45,6 +45,8 @@ int exit_shell(char **cmd, env_t *env, char *line)
 	}
 
 	env->status = exit_value;
+	free_chars(line, env);
+	free(cmd);
 	exit(env->status);
 	return (env->status);
 }
