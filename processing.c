@@ -6,7 +6,6 @@
  * @args: argument.
  * Return: Nothing.
  */
-
 void processing(env_t *env, char **args)
 {
 	int fail_check2 = 0;
@@ -15,7 +14,7 @@ void processing(env_t *env, char **args)
 	if (fail_check2 == -1)
 	{
 		error_msg(env, args[0]);
-                env->count++;
+		env->count++;
 		exit(127);
 	}
 	exit(0);

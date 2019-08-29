@@ -4,6 +4,7 @@
  * is_builtin - matches command with builtin function.
  * @cmd: command.
  * @env: struct of shell vars.
+ * @line: line string for exit to free
  * Return: 0 if found, -1 if not.
  */
 int is_builtin(char **cmd, env_t *env, char *line)
@@ -19,8 +20,6 @@ int is_builtin(char **cmd, env_t *env, char *line)
 		{"exit", echo_parser},
 		{NULL, NULL},
 	};
-
-
 	while (built_in_list[i].cmd)
 	{
 		if (!_strcmp(built_in_list[i].cmd, cmd[0]) && i != 4)

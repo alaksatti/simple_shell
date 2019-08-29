@@ -5,9 +5,9 @@
  * exit_shell - exits the shell.
  * @cmd: command.
  * @env: struct with env varibales.
+ * @line: line to free.
  * Return: Nothing:
  */
-
 int exit_shell(char **cmd, env_t *env, char *line)
 {
 	unsigned long i, exit_value = 0;
