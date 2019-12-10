@@ -1,6 +1,6 @@
 # Simple Shell
 
-Simple Shell is a simplified UNIX command interpreter maded to mimic dash.
+Simple Shell is a simplified UNIX command interpreter made to mimic dash.
 
 ## Requirements
 
